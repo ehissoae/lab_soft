@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 class Recurso(models.Model):
   tipo_recurso = models.CharField(max_length=50)

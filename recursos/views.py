@@ -3,5 +3,6 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-	return render(request, 'recursos/index.html')
+	tipoAcesso = request.user.profile.tipoAcesso
+	return render(request, 'recursos/index.html', {"tipoAcesso":tipoAcesso})
 

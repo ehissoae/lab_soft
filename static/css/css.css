@@ -1,0 +1,10 @@
+body {
+	background-color: gray;
+}
+
+ul.errorlist {
+	list-style-type: none;
+	color: #8a6d3b;
+	padding-left: 0px;
+	font-size: 12px;
+}

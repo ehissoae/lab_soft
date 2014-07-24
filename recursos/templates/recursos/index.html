@@ -2,6 +2,12 @@
 <head>
 </head>
 <body>
-	<p>Olaaaaaaaa</p>
+	{% if tipoAcesso == "administrador" %}
+		<p>Olaaaaaaaa adminzinho!!</p>
+	{% elif tipoAcesso == "coordenador" %}
+		<p>Ola coordenadorzito!!!!</p>
+	{% elif tipoAcesso == "especialista" %}
+		<p>Ola Sr. Especialista!!!!</p>
+	{% endif %}
 </body>
 <html>

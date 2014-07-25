@@ -6,3 +6,14 @@ python manage.py runserver
 
 # para debugger
 import pdb; pdb.set_trace()
+
+# para impacientes 
+{% for field in form %}
+	<div class="form-group">
+		<label class="col-lg-2 control-label" for="{{ field.id_for_label }}">{{field.label}}:</label>
+		<div class="col-lg-3">
+			<input class="form-control" id="{{ field.id_for_label }}" name="{{field.html_name}}" type="text">
+		</div>
+		<div class="col-lg-5 help-block">{{field.errors}}</div>
+	</div>
+{% endfor %}

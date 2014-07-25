@@ -4,9 +4,9 @@ from SiGeCAV.utils import *
 
 # Create your views here.
 def index(request):
-	redirect = url_if_not_authenticated(request)
-	if(redirect):
-		return redirect
+	url = url_if_not_authenticated(request)
+	if(url):
+		return url
 		
 	tipoAcesso = request.user.profile.tipoAcesso
 	return render(request, 'recursos/index.html', {"tipoAcesso":tipoAcesso})

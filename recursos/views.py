@@ -9,4 +9,4 @@ def index(request):
     return url
   recursos = Recurso.objects.all()
   tipoAcesso = request.user.profile.tipoAcesso
-  return render(request, 'recursos/index.html', {'recursos': recursos, "tipoAcesso":tipoAcesso})
+  return render(request, 'recursos/index.html', {"tipoAcesso":tipoAcesso, 'recursos': recursos})

@@ -5,8 +5,9 @@ from acidentes.models import Acidente
 # Create your views here.
 def index(request):
   acidenteId = request.GET.get("acidente_id", "")
-  missoes = Missao.objects.filter(acidente_id=acidente_id)
-  return render(request, 'missoes/index.html', {'missoes': missoes})
+  acidente = Acidente.objects.get(id=acidenteId)
+  missoes = acidente.missao_set.all()
+  return render(request, 'missoes/index.html', {'acidente': acidente, 'missoes': missoes})
 
 def detail(request):
   missaoId = request.GET.get("id", "")
@@ -21,10 +22,10 @@ def new(request):
   elif request.method == "POST":
     nome = request.POST.get("nome", "")
     tipoMissao = request.POST.get("tipoMissao", "")
-    acidente_id = request.POST.get("acidente_id", "")
-    if nome and tipoMissao and acidente_id:
-      Missao.objects.create(nome=nome, tipoMissao=tipoMissao, acidente_id=acidente_id)
-      return index(request)
+    acidenteId = request.POST.get("acidente_id", "")
+    if nome and tipoMissao and acidenteId:
+      Missao.objects.create(nome=nome, tipoMissao=tipoMissao, acidente_id=acidenteId)
+      return index2(request, acidenteId)
     return render(request, 'missoes/novo.html', {})
 
 def changeStatus(request):
@@ -36,9 +37,17 @@ def changeStatus(request):
     missaoId = request.GET.get("id", "")
     missao = Missao.objects.get(id=missaoId)
     missao.status = request.POST.get("status", "")
+    missao.save()
     return render(request, 'missoes/detalhes.html', {'missao': missao})
 
 def delete(request):
   missaoId = request.GET.get("id", "")
-  Missao.objects.get(id=missaoId).delete()
-  return index(request)
+  missao = Missao.objects.get(id=missaoId)
+  acidenteId = missao.acidente_id
+  missao.delete()
+  return index2(request, acidenteId)
+
+def index2(request, acidenteId):
+  acidente = Acidente.objects.get(id=acidenteId)
+  missoes = acidente.missao_set.all()
+  return render(request, 'missoes/index.html', {'acidente': acidente, 'missoes': missoes})

@@ -5,6 +5,10 @@
   <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 </head>
 <body>
+  <a href="/acidentes">voltar</a>
+
+  <h1>Editar Acidente</h1>
+
   <form action"/acidentes/editar" method="post">
     {% csrf_token %}
     <input type="hidden" name="id" value="{{acidente.id}}" />

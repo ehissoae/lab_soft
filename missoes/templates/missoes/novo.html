@@ -5,8 +5,13 @@
   <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 </head>
 <body>
+  <h1>Nova missão</h1>
+
   <form action"/missoes/novo" method="post">
     {% csrf_token %}
+    Acidente: {{acidente.local}} <br />
+    <input type="hidden" name="acidente_id" value="{{acidente.id}}">
+
     Nome: <input type="text" name="nome" /><br/>
     Tipo: 
       <select name="tipoMissao">
@@ -19,12 +24,6 @@
 
       <br/>
 
-    Acidente: 
-      <select name="acidente_id">
-        {% for acidente in acidentes %}
-          <option value="{{acidente.id}}">{{acidente.local}}</option>
-        {%endfor%}
-      </select>
     <input type="submit" value="Cadastrar">
   </form>
 </body>

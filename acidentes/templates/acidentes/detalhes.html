@@ -6,6 +6,10 @@
   <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 </head>
 <body>
+  <a href="/acidentes">voltar</a>
+
+  <h1>Acidente</h1>
+
   <table class="table">
     <tr>
       <th>Data</th>
@@ -14,6 +18,7 @@
       <th>Status</th>
       <th>Coordenador</th>
       <th>Especialista</th>
+      <th>Número de missões</th>
     </tr>
     <tr>
       <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
@@ -22,10 +27,16 @@
       <td>{{acidente.status}}</td>
       <td>{{acidente.coordenador}}</td>
       <td>{{acidente.especialista}}</td>
+      {% if acidente.missao_set.count == 0 %}
+        <td> 0 </td>
+      {% else %}
+        <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
+      {% endif %}
     </tr>
   </table>
 
   <td><a href="/acidentes/remover?id={{acidente.id}}">remover</a></td>
   <td><a href="/acidentes/editar?id={{acidente.id}}">editar</a></td>
+  <td><a href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">cadastrar nova missão</a></td>
 </body>
 <html>

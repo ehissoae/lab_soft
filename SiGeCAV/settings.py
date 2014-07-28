@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,6 +24,10 @@ SECRET_KEY = '5@5+oc&a#v&9h1e7*9&1e-)%5jqrq*lbn!6fy1h614v!zidbo&'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+
+TEMPLATE_DIRS = (
+    os.path.join(SITE_ROOT, "templates/"),
+)
 
 ALLOWED_HOSTS = []
 
@@ -37,9 +42,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'recursos',
-    'login',
     'acidentes',
     'missoes',
+    'accounts',
+    'home',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -89,8 +95,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATICFILES_DIRS = (
+    os.path.join(SITE_ROOT, "../static/"),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# after login
+LOGIN_REDIRECT_URL = "/home/"

@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 </head>
 <body>
+<<<<<<< HEAD
 	<table class="table">
     <tr>
       <th>Nome</th>
@@ -20,5 +21,14 @@
       </tr>
     {%endfor%}
   </table>
+=======
+	{% if tipoAcesso == "administrador" %}
+		<p>Olaaaaaaaa adminzinho!!</p>
+	{% elif tipoAcesso == "coordenador" %}
+		<p>Ola coordenadorzito!!!!</p>
+	{% elif tipoAcesso == "especialista" %}
+		<p>Ola Sr. Especialista!!!!</p>
+	{% endif %}
+>>>>>>> cca927fdbfd5461583d2610e6cf611599bd02163
 </body>
 <html>

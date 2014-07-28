@@ -1,2 +1,8 @@
+# banco de dados
 python manage.py syncdb
-python manage.py runserver 8080
+
+# subir servidor
+python manage.py runserver
+
+# para debugger
+import pdb; pdb.set_trace()

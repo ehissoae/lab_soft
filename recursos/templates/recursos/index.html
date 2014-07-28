@@ -1,13 +1,24 @@
+{% load staticfiles %}
+
 <html>
 <head>
+  <title>SiGeCAV</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 </head>
 <body>
-	{% if tipoAcesso == "administrador" %}
-		<p>Olaaaaaaaa adminzinho!!</p>
-	{% elif tipoAcesso == "coordenador" %}
-		<p>Ola coordenadorzito!!!!</p>
-	{% elif tipoAcesso == "especialista" %}
-		<p>Ola Sr. Especialista!!!!</p>
-	{% endif %}
+	<table class="table">
+    <tr>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>Telefone</th>
+    </tr>
+    {% for recurso in recursos %}
+      <tr>
+        <td>{{recurso.nome}}</td>
+        <td>{{recurso.tipo_recurso}}</td>
+        <td>{{recurso.phone_number}}</td>
+      </tr>
+    {%endfor%}
+  </table>
 </body>
 <html>

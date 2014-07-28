@@ -1,0 +1,14 @@
+{% load staticfiles %}
+<html>
+<head>
+  <title>SiGeCAV</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+  <form action"/missoes/editar" method="post">
+    {% csrf_token %}
+    Status: <input type="text" name="status" value="{{missao.status}}" /><br/>
+    <input type="submit" value="Editar">
+  </form>
+</body>
+<html>

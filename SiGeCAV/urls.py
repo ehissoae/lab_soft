@@ -9,5 +9,7 @@ urlpatterns = patterns('django.contrib.auth.views',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^recursos/', include('recursos.urls')),
+    url(r'^acidentes/missoes/', include('missoes.urls')),
+    url(r'^acidentes/', include('acidentes.urls')),
     url(r'^', include('home.urls')),
 )

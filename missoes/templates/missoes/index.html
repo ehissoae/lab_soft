@@ -1,0 +1,32 @@
+{% load staticfiles %}
+
+<html>
+<head>
+  <title>SiGeCAV</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+	<table class="table">
+    <tr>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>Status</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for missao in missoes %}
+      <tr>
+        <td>{{missao.nome}}</td>
+        <td>{{missao.tipoMissao}}</td>
+        <td>{{missao.status}}</td>
+        <td><a href="/missoes/detalhes?id={{missao.id}}">detalhar</a></td>
+        <td><a href="/missoes/alterarStatus?id={{missao.id}}">alterar status</a></td>
+        <td><a href="/missoes/remover?id={{missao.id}}">remover</a></td>
+      </tr>
+    {%endfor%}
+  </table>
+
+  <a href="/missoes/novo">Cadastrar missao</a>
+</body>
+<html>

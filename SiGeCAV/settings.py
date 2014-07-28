@@ -23,10 +23,17 @@ SECRET_KEY = '5@5+oc&a#v&9h1e7*9&1e-)%5jqrq*lbn!6fy1h614v!zidbo&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+# Template
 TEMPLATE_DEBUG = True
 
 TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, "templates/"),
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth'
 )
 
 ALLOWED_HOSTS = []
@@ -42,9 +49,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'recursos',
+    'conta',
     'acidentes',
     'missoes',
-    'accounts',
     'home',
 )
 
@@ -105,4 +112,4 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 
 # after login
-LOGIN_REDIRECT_URL = "/home/"
+LOGIN_REDIRECT_URL = "/"

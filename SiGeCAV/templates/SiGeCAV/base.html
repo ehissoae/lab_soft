@@ -4,41 +4,59 @@
 <head>
   <link rel="stylesheet" href="{% static 'css/css.css' %}" type="text/css">
 	<link rel="stylesheet" href="{% static 'bootstrap-3.2.0-dist/css/bootstrap.min.css' %}" type="text/css">
-  <script src="{% static 'bootstrap-3.2.0-dist/js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'jquery/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'bootstrap-3.2.0-dist/js/bootstrap.min.js' %}"></script>
 
   <title>{% block title %}My amazing site{% endblock %}</title>
 </head>
 
 <body>
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Link</a></li>
+  {% block page %}
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'home' %}">SiGeCAV</a>
+        </div>
 
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-              <li class="divider"></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li>
-        </ul>
-    </div>
-  </nav>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'recursos' %}">Recursos</a></li>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        {% block content %}{% endblock %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          {% if request.user.is_authenticated %}
+            <p class="navbar-text navbar-right">
+              <a href="#">Olá, {{ request.user.username }}</a>
+              <a title="encerrar sessão" class="glyphicon glyphicon-off" href="/conta/logout"></a>
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="page-header">
+        <h1>{% block header %}{% endblock %}</h1>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          {% block content %}{% endblock %}
+        </div>
       </div>
     </div>
-  </div>
+  {% endblock %}
 </body>
 </html>

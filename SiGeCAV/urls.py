@@ -5,17 +5,11 @@ from home import views
 admin.autodiscover()
 
 urlpatterns = patterns('django.contrib.auth.views',
-    # Examples:
-    # url(r'^$', 'SiGeCAV.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
-    # LOGIN
-    url(r'^accounts/', include('accounts.urls')),
+    url(r'^conta/', include('conta.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^recursos/', include('recursos.urls')),
-    
-    url(r'^acidentes/', include('acidentes.urls')),
     url(r'^acidentes/missoes/', include('missoes.urls')),
-    url(r'^home/', include('home.urls')),
+    url(r'^acidentes/', include('acidentes.urls')),
+    url(r'^', include('home.urls')),
 )

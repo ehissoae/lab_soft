@@ -1,0 +1,32 @@
+{% load staticfiles %}
+
+<html>
+<head>
+  <title>SiGeCAV</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+	<table class="table">
+    <tr>
+      <th>Data</th>
+      <th>Local</th>
+      <th>Descrição</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for acidente in acidentes %}
+      <tr>
+        <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
+        <td>{{acidente.local}}</td>
+        <td>{{acidente.descricao}}</td>
+        <td><a href="/acidentes/detalhes?id={{acidente.id}}">detalhar</a></td>
+        <td><a href="/acidentes/editar?id={{acidente.id}}">editar</a></td>
+        <td><a href="/acidentes/remover?id={{acidente.id}}">remover</a></td>
+      </tr>
+    {%endfor%}
+  </table>
+
+  <a href="/acidentes/novo">Cadastrar acidente</a>
+</body>
+<html>

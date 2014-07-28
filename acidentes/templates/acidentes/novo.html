@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<html>
+<head>
+  <title>SiGeCAV</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+  <form action"/acidentes/novo" method="post">
+    {% csrf_token %}
+    Data: <input type="text" name="dataHora" value="{% now 'd/m/Y H:i' %}" /><br/>
+    Local: <input type="text" name="local" /><br/>
+    Descricao:
+    <textarea name="descricao" rows="4" cols="50"></textarea>
+    <input type="submit" value="Cadastrar">
+  </form>
+</body>
+<html>

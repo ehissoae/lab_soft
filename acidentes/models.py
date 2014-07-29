@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User 
-from django.contrib import admin
 
 class Acidente(models.Model):
   dataHora = models.DateTimeField()
@@ -13,6 +12,3 @@ class Acidente(models.Model):
 
   def __unicode__(self):
     return self.local
-
-class AcidenteAdmin(admin.ModelAdmin):
-    fields = ('status')

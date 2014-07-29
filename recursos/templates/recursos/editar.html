@@ -1,0 +1,19 @@
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Editar Recurso{% endblock %}
+
+{% block header %}Editar Recurso{% endblock %}
+
+{% block content %}
+  <a href="{% url 'recursos' %}">voltar</a>
+
+  <form action"{% url 'recursoEditar' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{recurso.id}}" />
+    Nome: <input type="text" name="nome" value="{{recurso.nome}}"/><br/>
+    Tipo: <input type="text" name="tipoRecurso" value="{{recurso.tipoRecurso}}"/><br/>
+    Telefone: <input type="text" name="phoneNumber" value="{{recurso.phoneNumber}}" /><br/>
+    <input type="submit" value="Cadastrar">
+  </form>
+
+{% endblock %}

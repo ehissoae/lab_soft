@@ -1,0 +1,19 @@
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Novo Recurso{% endblock %}
+
+{% block header %}Novo Recurso{% endblock %}
+
+{% block content %}
+  <a href="{% url 'recursos' %}">voltar</a>
+
+  <form action"{% url 'recursoNovo' %}" method="post">
+    {% csrf_token %}
+
+    Nome: <input type="text" name="nome" /><br/>
+    Tipo: <input type="text" name="tipoRecurso"/><br/>
+    Telefone: <input type="text" name="telefone" /><br/>
+    <input type="submit" value="Cadastrar">
+  </form>
+
+{% endblock %}

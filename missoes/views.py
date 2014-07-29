@@ -42,3 +42,4 @@ def delete(request):
   missaoId = request.GET.get("id", "")
   Missao.objects.get(id=missaoId).delete()
   return index(request)
+

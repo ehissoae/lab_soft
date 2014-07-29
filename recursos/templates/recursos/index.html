@@ -17,6 +17,7 @@
         <td>{{recurso.nome}}</td>
         <td>{{recurso.tipo_recurso}}</td>
         <td>{{recurso.phone_number}}</td>
+        <td>{% firstof recurso.quantidade "---" %}</td>
       </tr>
     {%endfor%}
   </table>

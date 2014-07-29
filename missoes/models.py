@@ -7,5 +7,7 @@ class Missao(models.Model):
   status = models.CharField(max_length=20, default='aguardandoRecursos')
   acidente = models.ForeignKey(Acidente) 
 
+  recursos = models.ManyToManyField(Recurso, through='AlocacaoRecurso')
+
   def __unicode__(self):
     return self.nome

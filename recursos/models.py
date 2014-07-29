@@ -7,6 +7,13 @@ class Recurso(models.Model):
   nome = models.CharField(max_length=50)
   status = models.CharField(max_length=10)
   phone_number = models.CharField(max_length=20)
+  quantidade_disponivel = models.IntegerField()
 
   def __unicode__(self):
     return self.nome
+
+class AlocacaoRecurso(models.Model):
+  recurso = models.ForeignKey(Recurso)
+  missao = models.ForeignKey(Missao)
+  quantidade_alocada = models.IntegerField()
+  data_alocacao = models.DateField()

@@ -1,24 +1,32 @@
-{% load staticfiles %}
+{% extends "SiGeCAV/base.html" %}
 
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-	<table class="table">
+{% block title %}SiGeCAV - Recursos{% endblock %}
+
+{% block header %}Recursos{% endblock %}
+
+{% block content %}
+
+  <table class="table">
     <tr>
       <th>Nome</th>
       <th>Tipo</th>
       <th>Telefone</th>
+      <th></th>
     </tr>
     {% for recurso in recursos %}
       <tr>
         <td>{{recurso.nome}}</td>
-        <td>{{recurso.tipo_recurso}}</td>
-        <td>{{recurso.phone_number}}</td>
+        <td>{{recurso.tipoRecurso}}</td>
+        <td>{{recurso.phoneNumber}}</td>
+        <td>
+          <a href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
+          <a href="/recursos/editar?id={{recurso.id}}">editar</a>
+          <a href="/recursos/remover?id={{recurso.id}}">remover</a>
+        </td>
       </tr>
     {%endfor%}
   </table>
-</body>
-<html>
+
+  <a href="{% url 'recursoNovo' %}">Cadastrar Recurso</a>
+
+{% endblock %}

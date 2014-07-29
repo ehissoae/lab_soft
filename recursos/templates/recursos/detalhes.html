@@ -1,0 +1,28 @@
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Detalhar Recursos{% endblock %}
+
+{% block header %}Detalhar Recurso{% endblock %}
+
+{% block content %}
+  <a href="{% url 'recursos' %}">voltar</a>
+
+  <table class="table">
+    <tr>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>Telefone</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>{{recurso.nome}}</td>
+      <td>{{recurso.tipoRecurso}}</td>
+      <td>{{recurso.phoneNumber}}</td>
+      <td>{{recurso.status}}</td>
+    </tr>
+  </table>
+
+  <a href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
+  <a href="/recursos/editar?id={{recurso.id}}">editar</a>
+  <a href="/recursos/remover?id={{recurso.id}}">remover</a>
+{% endblock %}

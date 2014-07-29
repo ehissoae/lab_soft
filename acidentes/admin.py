@@ -1,3 +1,4 @@
 from django.contrib import admin
+from acidentes.models import Acidente
 
-# Register your models here.
+admin.site.register(Acidente)

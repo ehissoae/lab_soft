@@ -7,10 +7,13 @@
 </head>
 <body>
 	<table class="table">
+    <h1>Acidentes</h1>
+
     <tr>
       <th>Data</th>
       <th>Local</th>
       <th>Descrição</th>
+      <th>Número de missões</th>
       <th></th>
       <th></th>
       <th></th>
@@ -20,6 +23,11 @@
         <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
         <td>{{acidente.local}}</td>
         <td>{{acidente.descricao}}</td>
+        {% if acidente.missao_set.count == 0 %}
+          <td> 0 </td>
+        {% else %}
+          <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
+        {% endif %}
         <td><a href="/acidentes/detalhes?id={{acidente.id}}">detalhar</a></td>
         <td><a href="/acidentes/editar?id={{acidente.id}}">editar</a></td>
         <td><a href="/acidentes/remover?id={{acidente.id}}">remover</a></td>

@@ -1,27 +1,38 @@
-{% load staticfiles %}
+{% extends "SiGeCAV/base.html" %}
 
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
+{% block title %}SiGeCAV - Missões{% endblock %}
+
+{% block header %}Missões{% endblock %}
+
+{% block content %}
+
   <table class="table">
     <tr>
       <th>Nome</th>
       <th>Tipo</th>
       <th>Status</th>
-      <th>Acidente</th>
+      <th>Recursos Alocados</th>
+      <th>Acidente</th> 
+      <th></th> 
     </tr>
     <tr>
       <td>{{missao.nome}}</td>
       <td>{{missao.tipoMissao}}</td>
       <td>{{missao.status}}</td>
+      <td>
+          {% if missao.recursos %}
+            <ul class="unstyled">
+              {% for recurso in missao.recursos.all %}
+                <li>{{ recurso }}</li> 
+              {% endfor %}
+            </ul>
+          {% else %}
+            "----"
+          {% endif %}
+      </td>
       <td>{{missao.acidente}}</td>
+      <td><a href="acidentes/missoes/remover?id={{missao.id}}">remover</a><a href="acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a></td>
     </tr>
   </table>
 
-  <td><a href="/missoes/remover?id={{missao.id}}">remover</a></td>
-  <td><a href="/missoes/alterarStatus?id={{missao.id}}">alterar status</a></td>
-</body>
-<html>
+{% endblock %}

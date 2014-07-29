@@ -1,22 +1,24 @@
-{% load staticfiles %}
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-  <a href="/acidentes">voltar</a>
+{% extends "SiGeCAV/base.html" %}
 
-  <h1>Editar Acidente</h1>
+{% block title %}SiGeCAV - Acidentes{% endblock %}
+
+{% block header %}Editar Acidente{% endblock %}
+
+{% block content %}
+
+  	<a class="btn btn-default" href="/acidentes"><img src="https://cdn0.iconfinder.com/data/icons/typicons-2/24/arrow-back-24.png" /></a>
+	<br/><br/>
 
   <form action"/acidentes/editar" method="post">
     {% csrf_token %}
     <input type="hidden" name="id" value="{{acidente.id}}" />
-    Data: <input type="text" name="dataHora" value="{{acidente.dataHora|date:'d/m/Y H:i'}}" /><br/>
-    Local: <input type="text" name="local" value="{{acidente.local}}" /><br/>
+    Data: <input type="text" name="dataHora" value="{{acidente.dataHora|date:'d/m/Y H:i'}}" /><br/><br/>
+    Local: <input type="text" name="local" value="{{acidente.local}}" /><br/><br/>
     Descricao:
-    <textarea name="descricao" rows="4" cols="50">{{acidente.descricao}}</textarea>
-    <input type="submit" value="Editar">
+    <br/><textarea name="descricao" rows="4" cols="50">{{acidente.descricao}}</textarea>
+    <br/><input type="submit" value="Salvar Alterações">
   </form>
-</body>
-<html>
+	
+
+{% endblock %}
+  

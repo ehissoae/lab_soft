@@ -1,42 +1,39 @@
-{% load staticfiles %}
+{% extends "SiGeCAV/base.html" %}
 
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-  <a href="/acidentes">voltar</a>
+{% block title %}SiGeCAV - Acidentes{% endblock %}
 
-  <h1>Acidente</h1>
+{% block header %}Detalhes do Acidente{% endblock %}
 
-  <table class="table">
-    <tr>
-      <th>Data</th>
-      <th>Local</th>
-      <th>Descrição</th>
-      <th>Status</th>
-      <th>Coordenador</th>
-      <th>Especialista</th>
-      <th>Número de missões</th>
-    </tr>
-    <tr>
-      <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
-      <td>{{acidente.local}}</td>
-      <td>{{acidente.descricao}}</td>
-      <td>{{acidente.status}}</td>
-      <td>{{acidente.coordenador}}</td>
-      <td>{{acidente.especialista}}</td>
-      {% if acidente.missao_set.count == 0 %}
-        <td> 0 </td>
-      {% else %}
-        <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
-      {% endif %}
-    </tr>
-  </table>
+{% block content %}
 
-  <td><a href="/acidentes/remover?id={{acidente.id}}">remover</a></td>
-  <td><a href="/acidentes/editar?id={{acidente.id}}">editar</a></td>
-  <td><a href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">cadastrar nova missão</a></td>
-</body>
-<html>
+	<a class="btn btn-default" href="/acidentes"><img src="https://cdn0.iconfinder.com/data/icons/typicons-2/24/arrow-back-24.png" /></a>
+	<a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}">remover</a>
+  	<a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
+  	<a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">cadastrar nova missão</a>
+	<br/><br/>
+
+  	<table class="table">
+	    <tr>
+	      <th>Data</th>
+	      <th>Local</th>
+	      <th>Descrição</th>
+	      <th>Status</th>
+	      <th>Coordenador</th>
+	      <th>Especialista</th>
+	      <th>Número de missões</th>
+	    </tr>
+	    <tr>
+	      <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
+	      <td>{{acidente.local}}</td>
+	      <td>{{acidente.descricao}}</td>
+	      <td>{{acidente.status}}</td>
+	      <td>{{acidente.coordenador}}</td>
+	      <td>{{acidente.especialista}}</td>
+	      {% if acidente.missao_set.count == 0 %}
+	        <td> 0 </td>
+	      {% else %}
+	        <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
+	      {% endif %}
+	    </tr>
+  	</table>
+{% endblock %}

@@ -1,13 +1,12 @@
-{% load staticfiles %}
+{% extends "SiGeCAV/base.html" %}
 
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
+{% block title %}SiGeCAV - Acidentes{% endblock %}
+
+{% block header %}Lista de Acidentes{% endblock %}
+
+{% block content %}
+
 	<table class="table">
-    <h1>Acidentes</h1>
 
     <tr>
       <th>Data</th>
@@ -28,13 +27,13 @@
         {% else %}
           <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
         {% endif %}
-        <td><a href="/acidentes/detalhes?id={{acidente.id}}">detalhar</a></td>
-        <td><a href="/acidentes/editar?id={{acidente.id}}">editar</a></td>
-        <td><a href="/acidentes/remover?id={{acidente.id}}">remover</a></td>
+        <td><a class="btn btn-default" href="/acidentes/detalhes?id={{acidente.id}}">detalhar</a>
+        <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
+        <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}">remover</a></td>
       </tr>
     {%endfor%}
   </table>
 
-  <a href="/acidentes/novo">Cadastrar acidente</a>
-</body>
-<html>
+  <a class="btn btn-default" href="/acidentes/novo">Cadastrar Acidente</a>
+  
+{% endblock %}

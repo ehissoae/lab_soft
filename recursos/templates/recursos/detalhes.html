@@ -21,7 +21,7 @@
       <td>{{recurso.get_tipoRecurso_display}}</td>
       <td>{{recurso.get_status_display}}</td>
       <td>{{recurso.telefone}}</td>
-      <td>{{recurso.quantidadeTotal}}</td>
+      <td>{% firstof recurso.quantidadeTotal "---" %}</td>
       <td>{{recurso.descricao}}</td>
     </tr>
   </table>

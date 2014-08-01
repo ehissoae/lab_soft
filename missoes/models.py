@@ -16,3 +16,4 @@ class AlocacaoRecurso(models.Model):
   missao = models.ForeignKey("missoes.Missao")
   quantidadeAlocada = models.IntegerField(null=True, blank=True)
   dataAlocacao = models.DateField(default=datetime.date.today)
+  observacao = models.CharField(max_length=200)

@@ -6,7 +6,7 @@ from missoes.models import AlocacaoRecurso
 
 class Recurso(models.Model):
   RESOURCES_TYPES = (("externo", "Externo"), ("internoFisico", "Interno Fisico"), ("internoHumano", "Interno Humano"))
-  RESOURCES_STATUSES = (("ativo", "ativo"), ("removido", "removido"))
+  RESOURCES_STATUSES = (("ativo", "Ativo"), ("removido", "Removido"))
   nome = models.CharField(max_length=50)
   tipoRecurso = models.CharField(max_length=50,
                   choices=RESOURCES_TYPES)

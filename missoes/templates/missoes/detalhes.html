@@ -21,9 +21,9 @@
       <td>{{missao.status}}</td>
       <td>
           {% if missao.recursos %}
-            <ul class="unstyled">
-              {% for recurso in missao.recursos.all %}
-                <li>{{ recurso }}</li> 
+            <ul class="list-unstyled">
+              {% for alocacaoRecurso in alocacoesRecurso %}
+                <li><a href="/acidentes/missoes/detalhesRecursoAlocado?id={{alocacaoRecurso.id}}">{{ alocacaoRecurso.recurso}}</a> <a href="/acidentes/missoes/removerRecursoAlocado?id={{alocacaoRecurso.id}}"><small>remover</small></a></li>
               {% endfor %}
             </ul>
           {% else %}

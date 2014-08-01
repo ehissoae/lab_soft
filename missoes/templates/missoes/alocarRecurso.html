@@ -6,24 +6,31 @@
 
 {% block content %}
 
-   <form action"{% url 'alocar_recurso' %}" method="post">
+  <form action"{% url 'alocar_recurso' %}" method="post">
     {% csrf_token %}
     Acidente: {{acidente.local}} <br />
     Missão: {{missao.nome}} <br />
     <input type="hidden" name="missao_id" value="{{missao.id}}">
 
     Recurso:
-      <select name="recurso_id">
+      <select class="js-resource-select" name="recurso_id">
         {% for recurso in recursos %}
-          <option value="{{ recurso.id }}">{{recurso}}</option>
+          <option data-quantity="recurso.quantidadeTotal" value="{{ recurso.id }}">{{recurso}}</option>
         {% endfor %}
       </select>
 
       <br/>
 
-    Quantidade: <input type="number" name="quantidadeAlocada" min="1" max="5"><br/>
+    Quantidade: <input class="js-quantity" type="number" name="quantidadeAlocada" min="1" max="5"><br/>
 
     <input type="submit" value="Cadastrar">
   </form>  
+
+  <script>
+    $(".js-resource-select").change(function() {
+      var val = $(this).val();
+      console.log(val);
+    });
+  </script>
 
 {% endblock %}

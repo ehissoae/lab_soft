@@ -64,13 +64,13 @@ def assignResource(request):
     recursos = Recurso.objects.all()
     return render(request, 'missoes/alocarRecurso.html', {'acidente':acidente, 'missao':missao, 'recursos':recursos})
   elif request.method == "POST":
-    quantidadeAlocada = request.POST.get("quantidadeAlocada", "")
+    quantidadeAlocada = request.POST.get("quantidadeAlocada", 0)
 
     recursoId = request.POST.get("recurso_id", "")
     missaoId = request.POST.get("missao_id", "")
     missao = Missao.objects.get(id=missaoId)
 
-    if recursoId and missaoId and quantidadeAlocada:
+    if recursoId and missaoId:
       AlocacaoRecurso.objects.create(recurso_id=recursoId, missao_id=missaoId, quantidadeAlocada=quantidadeAlocada)
       return redirect('/acidentes/missoes/detalhes?id=' + missaoId)
     return render(request, 'missoes/alocarRecurso.html', {})

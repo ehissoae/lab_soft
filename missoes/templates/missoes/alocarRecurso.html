@@ -8,28 +8,45 @@
 
   <form action"{% url 'alocar_recurso' %}" method="post">
     {% csrf_token %}
+
     Acidente: {{acidente.local}} <br />
     Missão: {{missao.nome}} <br />
     <input type="hidden" name="missao_id" value="{{missao.id}}">
 
-    Recurso:
-      <select class="js-resource-select" name="recurso_id">
-        {% for recurso in recursos %}
-          <option data-quantity="recurso.quantidadeTotal" value="{{ recurso.id }}">{{recurso}}</option>
-        {% endfor %}
-      </select>
-
-      <br/>
-
-    Quantidade: <input class="js-quantity" type="number" name="quantidadeAlocada" min="1" max="5"><br/>
+    Recurso: <select class="js-resource-select" name="recurso_id">
+      {% for recurso in recursos %}
+        <option data-quantity="{{recurso.quantidadeDisponivel}}" data-resource-type="{{recurso.tipoRecurso}}" value="{{recurso.id}}">{{recurso}}</option>
+      {% endfor %}
+    </select>
+    <br/>
+    <div class="js-quantity-box">
+      Quantidade: <input class="js-quantity" type="number" name="quantidadeAlocada" min="1" max="5">
+      <span class="help-block">Quantidade máxima: <span class="js-max-qtd"></span></span>
+    </div>
 
     <input type="submit" value="Cadastrar">
   </form>  
 
   <script>
+    function changeResourceElements(){
+      var id = $(".js-resource-select").val();
+      var resourceType = $('.js-resource-select option[value="'+id+'"]').data("resource-type");
+      if(resourceType == "externo"){
+        $(".js-quantity-box").fadeOut();
+        $(".js-quantity").prop('disabled', true);
+      } else {
+        $(".js-quantity").prop('disabled', false);
+        initial_maximum = $('.js-resource-select option[value="'+id+'"]').data("quantity");
+        $("span.js-max-qtd").text(initial_maximum);
+        $(".js-quantity").attr("max",initial_maximum);
+        $(".js-quantity-box").fadeIn();
+      }
+    }
+    
+    changeResourceElements();
+
     $(".js-resource-select").change(function() {
-      var val = $(this).val();
-      console.log(val);
+      changeResourceElements();
     });
   </script>
 

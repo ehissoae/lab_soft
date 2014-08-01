@@ -4,7 +4,7 @@ python manage.py syncdb
 # subir servidor
 python manage.py runserver
 
-# para debugger
+# debugger
 import pdb; pdb.set_trace()
 
 # para impacientes 

@@ -1,18 +1,17 @@
-{% load staticfiles %}
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-  <h1>Nova missão</h1>
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Missão{% endblock %}
+
+{% block header %}Nova missão{% endblock %}
+
+{% block content %}
 
   <form action"/missoes/novo" method="post">
     {% csrf_token %}
     Acidente: {{acidente.local}} <br />
-    <input type="hidden" name="acidente_id" value="{{acidente.id}}">
+    <input type="hidden" name="acidente_id" value="{{acidente.id}}"><br/>
 
-    Nome: <input type="text" name="nome" /><br/>
+    Nome: <input type="text" name="nome" /><br/><br/>
     Tipo: 
       <select name="tipoMissao">
         <option value="resgate">resgate</option>
@@ -22,9 +21,9 @@
         <option value="remocaoVitima">remoção da vítima</option>
       </select>
 
-      <br/>
+      <br/><br/>
 
     <input type="submit" value="Cadastrar">
   </form>
-</body>
-<html>
+	
+{% endblock %}

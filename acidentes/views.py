@@ -19,9 +19,10 @@ def new(request):
     dataHora = request.POST.get("dataHora", "")
     local = request.POST.get("local", "")
     descricao = request.POST.get("descricao", "")
-    if dataHora and local and descricao:
+    SVCid = request.POST.get("SVCid", "")
+    if dataHora and local and descricao and SVCid:
       dataHora = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
-      Acidente.objects.create(dataHora=dataHora, local=local, descricao=descricao)
+      Acidente.objects.create(dataHora=dataHora, local=local, SVCid=SVCid, descricao=descricao)
       return index(request)
     return render(request, 'acidentes/novo.html', {})
 
@@ -39,6 +40,7 @@ def edit(request):
     acidente.dataHora = dataHora
     acidente.local = request.POST.get("local", "")
     acidente.descricao = request.POST.get("descricao", "")
+    acidente.SVCid = request.POST.get("SVCid", "")
     acidente.save()
     return render(request, 'acidentes/detalhes.html', {'acidente': acidente})
 

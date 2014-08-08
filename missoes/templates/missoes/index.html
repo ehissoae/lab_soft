@@ -1,14 +1,12 @@
-{% load staticfiles %}
+{% extends "SiGeCAV/base.html" %}
 
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-  <h1>Missões</h1>
+{% block title %}SiGeCAV - Missões{% endblock %}
 
-	<table class="table">
+{% block header %}Missões{% endblock %}
+
+{% block content %}
+
+  <table class="table">
     <tr>
       <th>Nome</th>
       <th>Tipo</th>
@@ -22,14 +20,13 @@
         <td>{{missao.nome}}</td>
         <td>{{missao.tipoMissao}}</td>
         <td>{{missao.status}}</td>
-        <td><a href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a></td>
-        <td><a href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a></td>
-        <td><a href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">alocar recurso</a></td>
-        <td><a href="/acidentes/missoes/remover?id={{missao.id}}">remover</a></td>
+        <td><a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a>
+        <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a>
+        <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">alocar recurso</a>
+        <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}">remover</a></td>
       </tr>
     {%endfor%}
   </table>
 
-  <a href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missao</a>
-</body>
-<html>
+  <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missao</a>
+{% endblock %}

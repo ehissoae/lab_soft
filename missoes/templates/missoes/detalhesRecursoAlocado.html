@@ -1,0 +1,49 @@
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Detalhes da Alocação de Recurso{% endblock %}
+
+{% block header %}Detalhes da Alocação de Recurso{% endblock %}
+
+{% block content %}
+
+  <dl class="dl-horizontal">
+    <dt>Acidente</dt>
+    <dd>{{recursoAlocado.missao.acidente}}</dd>
+    <dt>Missão</dt>
+    <dd>{{recursoAlocado.missao}}</dd>
+    <dt>Recurso</dt>
+    <dd>{{recursoAlocado.recurso}}</dd>
+    {% if recursoAlocado.quantidadeAlocada %}
+      <dt>Quantidade Alocada</dt>
+      <dd>{{recursoAlocado.quantidadeAlocada}}</dd>
+    {% endif %}
+    <dt>Data da Alocação</dt>
+    <dd>{{recursoAlocado.dataAlocacao}}</dd>
+    <dt>Observação</dt>
+    <dd>{{recursoAlocado.observacao}}</dd>
+  </dl>
+
+  <h1>Detalhes do Recurso</h1>
+
+  <dl class="dl-horizontal">
+    <dt>Nome</dt>
+    <dd>{{recursoAlocado.recurso.nome}}</dd>
+    <dt>Tipo</dt>
+    <dd>{{recursoAlocado.recurso.tipoRecurso}}</dd>
+    <dt>Status</dt>
+    <dd>{{recursoAlocado.recurso.get_status_display}}</dd>
+    <dt>Telefone</dt>
+    <dd>{{recursoAlocado.recurso.telefone}}</dd>
+    {% if recursoAlocado.recurso.quantidadeTotal %}
+      <dt>Quantidade Total</dt>
+      <dd>{{recursoAlocado.recurso.quantidadeTotal}}</dd>
+      <dt>Quantidade Disponivel</dt>
+      <dd>{{recursoAlocado.recurso.quantidadeDisponivel}}</dd>
+    {% endif %}
+    <dt>Descrição</dt>
+    <dd>{{recursoAlocado.recurso.descricao}}</dd>
+
+    
+  </dl>
+
+{% endblock %}

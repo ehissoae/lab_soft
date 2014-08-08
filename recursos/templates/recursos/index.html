@@ -17,7 +17,7 @@
     {% for recurso in recursos %}
       <tr>
         <td>{{recurso.nome}}</td>
-        <td>{{recurso.tipoRecurso}}</td>
+        <td>{{recurso.get_tipoRecurso_display}}</td>
         <td>{{recurso.telefone}}</td>
         <td>{% firstof recurso.quantidadeTotal "---" %}</td>
         <td>

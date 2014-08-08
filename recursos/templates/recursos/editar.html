@@ -10,10 +10,42 @@
   <form action"{% url 'recursoEditar' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="id" value="{{recurso.id}}" />
+
     Nome: <input type="text" name="nome" value="{{recurso.nome}}"/><br/>
-    Tipo: <input type="text" name="tipoRecurso" value="{{recurso.tipoRecurso}}"/><br/>
-    Telefone: <input type="text" name="phoneNumber" value="{{recurso.phoneNumber}}" /><br/>
+    Tipo: <select class="js-resource-type" name="tipoRecurso">
+        {% for key, value in resources_types %}
+          <option value="{{key}}" {%ifequal key recurso.tipoRecurso%}selected{%endifequal%} >{{ value }}</option>
+        {% endfor %}
+      </select>
+    Status: <select name="status">
+      {% for key, value in resources_statuses %}
+        <option value="{{key}}" {%ifequal key recurso.status%}selected{%endifequal%}>{{ value }}</option>
+      {% endfor %}
+    </select>
+    Telefone: <input type="text" name="telefone" value="{{recurso.telefone}}" /><br/>
+    <div class="js-quantity">
+      Quantidade Total: <input type="number" name="quantidadeTotal" min="1" value="{{recurso.quantidadeTotal}}"/><br/>
+    </div>
+    Descrição: <textarea name="descricao" rows="4" cols="50">{{recurso.descricao}}</textarea>
     <input type="submit" value="Cadastrar">
   </form>
+
+  <script>
+  	if($(".js-resource-type").val() == "externo"){
+      $(".js-quantity").hide();
+      $(".js-quantity input").prop('disabled', true);
+    }
+    $(".js-resource-type").change(function() {
+      var val = $(this).val();
+      if(val === "internoFisico" || val === "internoHumano") {
+          $(".js-quantity input").prop('disabled', false);
+          $(".js-quantity").fadeIn();
+      }
+      else if(val === "externo") {
+          $(".js-quantity").fadeOut();
+          $(".js-quantity input").prop('disabled', true);
+      }
+    });
+  </script>
 
 {% endblock %}

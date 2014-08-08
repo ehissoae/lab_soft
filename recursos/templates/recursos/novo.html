@@ -5,15 +5,45 @@
 {% block header %}Novo Recurso{% endblock %}
 
 {% block content %}
+
   <a href="{% url 'recursos' %}">voltar</a>
 
   <form action"{% url 'recursoNovo' %}" method="post">
     {% csrf_token %}
 
     Nome: <input type="text" name="nome" /><br/>
-    Tipo: <input type="text" name="tipoRecurso"/><br/>
+    Tipo: <select class="js-resource-type" name="tipoRecurso">
+        {% for key, value in resources_types %}
+          <option value="{{key}}">{{ value }}</option>
+        {% endfor %}
+      </select>
     Telefone: <input type="text" name="telefone" /><br/>
+    <div class="js-quantity">
+      Quantidade Total: <input type="number" name="quantidadeTotal" min="1"/><br/>
+    </div>
+
+    Descrição: <textarea name="descricao" rows="4" cols="50"></textarea>
+
     <input type="submit" value="Cadastrar">
   </form>
 
+  <script>
+    if($(".js-resource-type").val() == "externo"){
+      $(".js-quantity").hide();
+      $(".js-quantity input").prop('disabled', true);
+    }
+  	$(".js-resource-type").change(function() {
+	    var val = $(this).val();
+	    if(val === "internoFisico" || val === "internoHumano") {
+          $(".js-quantity input").prop('disabled', false);
+          $(".js-quantity").fadeIn();
+	    }
+	    else if(val === "externo") {
+	        $(".js-quantity").fadeOut();
+	        $(".js-quantity input").prop('disabled', true);
+	    }
+	  });
+  </script>
+
 {% endblock %}
+

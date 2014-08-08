@@ -13,7 +13,8 @@ def index(request):
 def detail(request):
   missaoId = request.GET.get("id", "")
   missao = Missao.objects.get(id=missaoId)
-  return render(request, 'missoes/detalhes.html', {'missao': missao})
+  alocacoesRecurso = AlocacaoRecurso.objects.filter(missao_id=missao.id)
+  return render(request, 'missoes/detalhes.html', {'missao': missao, 'alocacoesRecurso': alocacoesRecurso})
 
 def new(request):
   if request.method == "GET":
@@ -64,13 +65,25 @@ def assignResource(request):
     recursos = Recurso.objects.all()
     return render(request, 'missoes/alocarRecurso.html', {'acidente':acidente, 'missao':missao, 'recursos':recursos})
   elif request.method == "POST":
-    quantidadeAlocada = request.POST.get("quantidadeAlocada", "")
-
+    quantidadeAlocada = request.POST.get("quantidadeAlocada", 0)
+    observacao = request.POST.get("observacao", "")
     recursoId = request.POST.get("recurso_id", "")
     missaoId = request.POST.get("missao_id", "")
     missao = Missao.objects.get(id=missaoId)
 
-    if recursoId and missaoId and quantidadeAlocada:
-      AlocacaoRecurso.objects.create(recurso_id=recursoId, missao_id=missaoId, quantidadeAlocada=quantidadeAlocada)
+    if recursoId and missaoId:
+      AlocacaoRecurso.objects.create(recurso_id=recursoId, missao_id=missaoId, quantidadeAlocada=quantidadeAlocada, observacao=observacao)
       return redirect('/acidentes/missoes/detalhes?id=' + missaoId)
     return render(request, 'missoes/alocarRecurso.html', {})
+
+def assignedResourceDetails(request):
+  recursoAlocadoId = request.GET.get("id", "")
+  recursoAlocado = AlocacaoRecurso.objects.get(id=recursoAlocadoId)
+  return render(request, 'missoes/detalhesRecursoAlocado.html', {'recursoAlocado': recursoAlocado})
+
+def deleteAssignedResource(request):
+  alocacaoRecursoId = request.GET.get("id", "")
+  alocacaoRecurso = AlocacaoRecurso.objects.get(id=alocacaoRecursoId)
+  missaoId = alocacaoRecurso.missao.id
+  alocacaoRecurso.delete()
+  return redirect("/acidentes/missoes/detalhes?id=" + str(missaoId))

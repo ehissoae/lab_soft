@@ -47,12 +47,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'acidentes',
     'recursos',
     'conta',
     'missoes',
     'home',
+    'SiGeCAV',
 )
 
 MIDDLEWARE_CLASSES = (

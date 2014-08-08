@@ -4,7 +4,7 @@ python manage.py syncdb
 # subir servidor
 python manage.py runserver
 
-# para debugger
+# debugger
 import pdb; pdb.set_trace()
 
 # para impacientes 
@@ -17,3 +17,6 @@ import pdb; pdb.set_trace()
 		<div class="col-lg-5 help-block">{{field.errors}}</div>
 	</div>
 {% endfor %}
+
+
+

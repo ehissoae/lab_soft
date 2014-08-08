@@ -11,14 +11,18 @@
     <tr>
       <th>Nome</th>
       <th>Tipo</th>
-      <th>Telefone</th>
       <th>Status</th>
+      <th>Telefone</th>
+      <th>Quantidade Total</th>
+      <th>Descrição</th>
     </tr>
     <tr>
       <td>{{recurso.nome}}</td>
-      <td>{{recurso.tipoRecurso}}</td>
-      <td>{{recurso.phoneNumber}}</td>
-      <td>{{recurso.status}}</td>
+      <td>{{recurso.get_tipoRecurso_display}}</td>
+      <td>{{recurso.get_status_display}}</td>
+      <td>{{recurso.telefone}}</td>
+      <td>{% firstof recurso.quantidadeTotal "---" %}</td>
+      <td>{{recurso.descricao}}</td>
     </tr>
   </table>
 

@@ -1,0 +1,33 @@
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Usuários{% endblock %}
+
+{% block header %}Lista de Usuários{% endblock %}
+
+{% block content %}
+
+  <table class="table">
+
+    <tr>
+      <th>Nome</th>
+      <th>E-mail</th>
+      <th>Tipo Acesso</th>
+      <th></th>
+    </tr>
+    {% for usuario in usuarios %}
+      <tr>
+        <td>{{usuario.first_name}} {{usuario.last_name}}</td>
+        <td>{{usuario.email}}</td>
+        <td>{{usuario.profile.tipoAcesso}}</td>
+        <td>
+          <a class="btn btn-default" href="/conta/detalhes?id={{usuario.id}}">detalhar</a>
+          <a class="btn btn-default" href="/conta/editar?id={{usuario.id}}">editar</a>
+          <a class="btn btn-default" href="/conta/remover?id={{usuario.id}}">remover</a>
+        </td>
+      </tr>
+    {%endfor%}
+  </table>
+
+  <a class="btn btn-default" href="{%url 'usuarioNovo'%}">Cadastrar Usuário</a>
+  
+{% endblock %}

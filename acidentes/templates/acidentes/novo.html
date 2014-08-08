@@ -10,13 +10,13 @@
 	<br/><br/>
 	
 	<form action"/acidentes/novo" method="post">
-	    {% csrf_token %}
-	    Data: <input type="text" name="dataHora" value="{% now 'd/m/Y H:i' %}" /><br/><br/>
-	    Local: <input type="text" name="local" /><br/><br/>
-	    Descricao:
-	    <br/><textarea name="descricao" rows="4" cols="50"></textarea><br/>
-	    <input type="submit" value="Cadastrar">
-  	</form>
+    {% csrf_token %}
+    Data: <input type="text" name="dataHora" value="{% now 'd/m/Y H:i' %}" /><br/><br/>
+    Local: <input type="text" name="local" /><br/><br/>
+    Descricao:
+    <br/><textarea name="descricao" rows="4" cols="50"></textarea><br/>
+    <input type="submit" value="Cadastrar">
+	</form>
 	
 
 {% endblock %}

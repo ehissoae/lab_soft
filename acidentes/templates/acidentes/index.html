@@ -29,7 +29,7 @@
         {% endif %}
         <td><a class="btn btn-default" href="/acidentes/detalhes?id={{acidente.id}}">detalhar</a>
         <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
-        <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}">remover</a></td>
+        <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a></td>
       </tr>
     {%endfor%}
   </table>

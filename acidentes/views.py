@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from acidentes.models import Acidente
 from datetime import datetime
 from django.contrib import messages 
 
 # Create your views here.
 def index(request):
-  acidentes = Acidente.objects.all()
+  acidentes = Acidente.objects.exclude(status="removido")
   return render(request, 'acidentes/index.html', {'acidentes': acidentes})
 
 def detail(request):
@@ -23,15 +23,17 @@ def new(request):
     local = request.POST.get("local", "")
     descricao = request.POST.get("descricao", "")
     SVCid = request.POST.get("SVCid", "")
-    if dataHora and local and descricao and SVCid:
-      dataHora = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
-      num_results = Acidente.objects.filter(dataHora=dataHora, local=local, SVCid=SVCid, descricao=descricao).count()
+    if not "http://" in SVCid:
+      SVCid = "http://" + SVCid
+    if dataHora and local and descricao:
+      dataHoraFormatada = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
+      num_results = Acidente.objects.filter(dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao).exclude(status="removido").count()
       if num_results == 0:
-        Acidente.objects.create(dataHora=dataHora, local=local, SVCid=SVCid, descricao=descricao)
-        return index(request)
+        Acidente.objects.create(dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao)
+        return redirect("/acidentes")
       else:
         messages.error(request, 'Acidente já existe.')
-    return render(request, 'acidentes/novo.html', {})
+    return render(request, 'acidentes/novo.html', {'dataHora': dataHora, 'local': local, 'descricao': descricao, 'SVCid': SVCid})
 
 def edit(request):
   if request.method == "GET":
@@ -53,5 +55,7 @@ def edit(request):
 
 def delete(request):
   acidenteId = request.GET.get("id", "")
-  Acidente.objects.get(id=acidenteId).delete()
-  return index(request)
+  acidente = Acidente.objects.get(id=acidenteId)
+  acidente.status = "removido"
+  acidente.save()
+  return redirect("/acidentes")

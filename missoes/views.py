@@ -55,6 +55,7 @@ def index2(request, acidenteId):
   return render(request, 'missoes/index.html', {'acidente': acidente, 'missoes': missoes})
 
 def assignResource(request):
+  recursos = Recurso.objects.all()
   if request.method == "GET":
     acidenteId = request.GET.get("acidente_id", "")
     acidente = Acidente.objects.get(id=acidenteId)
@@ -62,19 +63,22 @@ def assignResource(request):
     missaoId = request.GET.get("missao_id", "")
     missao = Missao.objects.get(id=missaoId)
 
-    recursos = Recurso.objects.all()
     return render(request, 'missoes/alocarRecurso.html', {'acidente':acidente, 'missao':missao, 'recursos':recursos})
   elif request.method == "POST":
     quantidadeAlocada = request.POST.get("quantidadeAlocada", 0)
     observacao = request.POST.get("observacao", "")
     recursoId = request.POST.get("recurso_id", "")
     missaoId = request.POST.get("missao_id", "")
+    another_one = request.POST.get("continue", "")
     missao = Missao.objects.get(id=missaoId)
 
     if recursoId and missaoId:
       AlocacaoRecurso.objects.create(recurso_id=recursoId, missao_id=missaoId, quantidadeAlocada=quantidadeAlocada, observacao=observacao)
-      return redirect('/acidentes/missoes/detalhes?id=' + missaoId)
-    return render(request, 'missoes/alocarRecurso.html', {})
+      if not another_one:
+        return redirect('/acidentes/missoes/detalhes?id=' + missaoId)
+    missao = Missao.objects.get(id=missaoId)
+    acidente = missao.acidente
+    return render(request, 'missoes/alocarRecurso.html', {'acidente':acidente, 'missao':missao, 'recursos':recursos})
 
 def assignedResourceDetails(request):
   recursoAlocadoId = request.GET.get("id", "")

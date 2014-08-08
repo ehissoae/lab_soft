@@ -2,10 +2,18 @@ body {
 	font-family: "Verdana";
 }
 
+.logo {
+	color: yellow;
+}
+
 .navbar.navbar-inverse .navbar-brand,
 .navbar.navbar-inverse .navbar-brand:hover {
-	color: yellow;
-	font-family: "Calibri";
+	border-right: 10px;
+}
+
+.navbar.navbar-inverse .glyphicon-road {
+	font-size: 16px;
+	margin-right: 7px;
 }
 
 .navbar.navbar-inverse .navbar-nav>li>a {

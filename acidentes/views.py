@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from acidentes.models import Acidente
 from datetime import datetime
+from django.contrib import messages 
 
 # Create your views here.
 def index(request):
@@ -22,8 +25,12 @@ def new(request):
     SVCid = request.POST.get("SVCid", "")
     if dataHora and local and descricao and SVCid:
       dataHora = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
-      Acidente.objects.create(dataHora=dataHora, local=local, SVCid=SVCid, descricao=descricao)
-      return index(request)
+      num_results = Acidente.objects.filter(dataHora=dataHora, local=local, SVCid=SVCid, descricao=descricao).count()
+      if num_results == 0:
+        Acidente.objects.create(dataHora=dataHora, local=local, SVCid=SVCid, descricao=descricao)
+        return index(request)
+      else:
+        messages.error(request, 'Acidente já existe.')
     return render(request, 'acidentes/novo.html', {})
 
 def edit(request):

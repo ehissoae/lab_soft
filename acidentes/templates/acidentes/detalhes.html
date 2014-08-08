@@ -20,6 +20,7 @@
       <th>Status</th>
       <th>Coordenador</th>
       <th>Especialista</th>
+      <th>Link SVC</th>
       <th>Número de missões</th>
     </tr>
     <tr>
@@ -29,6 +30,7 @@
       <td>{{acidente.status}}</td>
       <td>{{acidente.coordenador}}</td>
       <td>{{acidente.especialista}}</td>
+      <td>{{acidente.SVCid}}</td>
       {% if acidente.missao_set.count == 0 %}
         <td> 0 </td>
       {% else %}

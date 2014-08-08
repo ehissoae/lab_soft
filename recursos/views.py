@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from recursos.models import Recurso
 from SiGeCAV.utils import *
+from django.contrib import messages 
 
 # Create your views here.
 def index(request):
@@ -35,8 +38,12 @@ def new(request):
     descricao = request.POST.get("descricao", "")
 
     if tipoRecurso and nome and telefone:
-      Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
-      return index(request)
+      num_results = Recurso.objects.filter(nome=nome, tipoRecurso=tipoRecurso).count()
+      if num_results == 0:
+        Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
+        return index(request)
+      else:
+        messages.error(request, 'Recurso já existe.')
     return render(request, 'recursos/novo.html', {
       'resources_types': Recurso.RESOURCES_TYPES,
       'resources_statuses': Recurso.RESOURCES_STATUSES,

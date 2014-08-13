@@ -26,7 +26,12 @@ def new(request):
     tipoMissao = request.POST.get("tipoMissao", "")
     acidenteId = request.POST.get("acidente_id", "")
     if nome and tipoMissao and acidenteId:
+      acidente = Acidente.objects.get(id=acidenteId)
       Missao.objects.create(nome=nome, tipoMissao=tipoMissao, acidente_id=acidenteId)
+
+      if acidente.especialista == None:
+        acidente.especialista = request.user
+        acidente.save()
       return index2(request, acidenteId)
     return render(request, 'missoes/novo.html', {})
 

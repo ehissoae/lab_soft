@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from acidentes.models import Acidente
 from datetime import datetime
 
@@ -21,7 +22,9 @@ def new(request):
     descricao = request.POST.get("descricao", "")
     if dataHora and local and descricao:
       dataHora = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
-      Acidente.objects.create(dataHora=dataHora, local=local, descricao=descricao)
+      acidente = Acidente.objects.create(dataHora=dataHora, local=local, descricao=descricao)
+      acidente.coordenador = request.user
+      acidente.save()
       return index(request)
     return render(request, 'acidentes/novo.html', {})
 

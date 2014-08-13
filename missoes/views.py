@@ -32,6 +32,11 @@ def new(request):
       if acidente.especialista == None:
         acidente.especialista = request.user
         acidente.save()
+
+      if acidente.status == 'aguardandoAnalise':
+        acidente.status = 'emAndamento'
+        acidente.save()
+
       return index2(request, acidenteId)
     return render(request, 'missoes/novo.html', {})
 

@@ -7,7 +7,7 @@ from acidentes.models import Acidente
 def index(request):
   acidenteId = request.GET.get("acidente_id", "")
   acidente = Acidente.objects.get(id=acidenteId)
-  missoes = acidente.missao_set.all()
+  missoes = acidente.missao_set.exclude(status="removido")
   return render(request, 'missoes/index.html', {'acidente': acidente, 'missoes': missoes})
 
 def detail(request):
@@ -46,16 +46,18 @@ def delete(request):
   missaoId = request.GET.get("id", "")
   missao = Missao.objects.get(id=missaoId)
   acidenteId = missao.acidente_id
-  missao.delete()
+  missao.status = "removido"
+  AlocacaoRecurso.objects.filter(missao_id=missaoId).delete()
+  missao.save()
   return index2(request, acidenteId)
 
 def index2(request, acidenteId):
   acidente = Acidente.objects.get(id=acidenteId)
-  missoes = acidente.missao_set.all()
+  missoes = acidente.missao_set.exclude(status="removido")
   return render(request, 'missoes/index.html', {'acidente': acidente, 'missoes': missoes})
 
 def assignResource(request):
-  recursos = Recurso.objects.all()
+  recursos = Recurso.objects.exclude(status="removido")
   if request.method == "GET":
     acidenteId = request.GET.get("acidente_id", "")
     acidente = Acidente.objects.get(id=acidenteId)

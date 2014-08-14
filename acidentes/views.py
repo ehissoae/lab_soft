@@ -57,5 +57,8 @@ def delete(request):
   acidenteId = request.GET.get("id", "")
   acidente = Acidente.objects.get(id=acidenteId)
   acidente.status = "removido"
+  for missao in acidente.missao_set.exclude(status="removido"):
+    missao.status = "removido"
+    missao.save()
   acidente.save()
   return redirect("/acidentes")

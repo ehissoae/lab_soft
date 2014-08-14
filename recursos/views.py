@@ -10,10 +10,10 @@ def index(request):
   url = url_if_not_authenticated(request)
   if(url):
     return url
-  recursos = Recurso.objects.all()
+  recursos = Recurso.objects.exclude(status="removido")
   tipoAcesso = request.user.profile.tipoAcesso
   return render(request, 'recursos/index.html', {
-    "tipoAcesso":tipoAcesso, 
+    "tipoAcesso": tipoAcesso, 
     'recursos': recursos
     })
 
@@ -38,7 +38,7 @@ def new(request):
     descricao = request.POST.get("descricao", "")
 
     if tipoRecurso and nome and telefone:
-      num_results = Recurso.objects.filter(nome=nome, tipoRecurso=tipoRecurso).count()
+      num_results = Recurso.objects.filter(nome=nome, tipoRecurso=tipoRecurso).exclude(status="removido").count()
       if num_results == 0:
         Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
         return index(request)
@@ -77,5 +77,7 @@ def edit(request):
 
 def delete(request):
   recursoId = request.GET.get("id", "")
-  Recurso.objects.get(id=recursoId).delete()
-  return index(request)
+  recurso = Recurso.objects.get(id=recursoId)
+  recurso.status = "removido"
+  recurso.save()
+  return redirect("/recursos")

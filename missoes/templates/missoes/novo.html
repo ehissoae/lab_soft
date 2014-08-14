@@ -13,15 +13,12 @@
 
     Nome: <input type="text" name="nome" /><br/><br/>
     Tipo: 
-      <select name="tipoMissao">
-        <option value="resgate">resgate</option>
-        <option value="remocaoObstaculo">remoção de obstáculos</option>
-        <option value="transporte">transporte</option>
-        <option value="socorroVitima">socorros à vítima</option>
-        <option value="remocaoVitima">remoção da vítima</option>
-      </select>
-
-      <br/><br/>
+    <select name="tipoMissao">
+      {% for key, value in mission_types %}
+        <option value="{{key}}" {%ifequal key acidente.missao.tipoMissao%}selected{%endifequal%}>{{ value }}</option>
+      {% endfor %}
+    </select>
+    <br/><br/>
 
     <input type="submit" value="Cadastrar">
   </form>

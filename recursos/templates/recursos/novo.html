@@ -10,6 +10,15 @@
 
   <form action"{% url 'recursoNovo' %}" method="post">
     {% csrf_token %}
+    {% if messages %}
+      <div class="alert alert-danger">
+        <ul class="list-unstyled">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
 
     Nome: <input type="text" name="nome" /><br/>
     Tipo: <select class="js-resource-type" name="tipoRecurso">

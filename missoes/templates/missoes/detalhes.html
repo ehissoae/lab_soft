@@ -17,8 +17,8 @@
     </tr>
     <tr>
       <td>{{missao.nome}}</td>
-      <td>{{missao.tipoMissao}}</td>
-      <td>{{missao.status}}</td>
+      <td>{{missao.get_tipoMissao_display}}</td>
+      <td>{{missao.get_status_display}}</td>
       <td>
           {% if missao.recursos.count %}
             <ul class="list-unstyled">

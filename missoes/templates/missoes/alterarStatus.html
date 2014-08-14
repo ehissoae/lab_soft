@@ -9,7 +9,12 @@
 
   <form action"acidentes/missoes/editar" method="post">
     {% csrf_token %}
-    Status: <input type="text" name="status" value="{{missao.status}}" /><br/>
+    Status: <select name="status">
+      {% for key, value in statuses_types %}
+        <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
+      {% endfor %}
+    </select>
+	<br/>
     <input type="submit" value="Editar">
   </form>
 </body>

@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import redirect
 from django.conf import settings
 from SiGeCAV.utils import *
 from django.contrib.auth.models import User
 from conta.models import Profile
+from django.contrib import messages 
 
 def custom_login(request):
 	url = url_if_not_authenticated(request)
@@ -10,9 +13,6 @@ def custom_login(request):
 		return url
 		
 	return redirect(settings.LOGIN_REDIRECT_URL)
-
-
-
 
 def index(request):
   usuarios = User.objects.all()
@@ -24,7 +24,6 @@ def detail(request):
   return render(request, 'registration/detalhes.html', {'usuario': usuario})
 
 def new(request):
-  roles = Profile.ROLE_CHOICES
   if request.method == "GET":
     return render(request, 'registration/novo.html', {'role_choices': Profile.ROLE_CHOICES})
   elif request.method == "POST":
@@ -34,11 +33,28 @@ def new(request):
     password = request.POST.get("password", "")
     tipoAcesso = request.POST.get("tipoAcesso", "")
 
-    if first_name and email and username and password and tipoAcesso:
-      user = User.objects.create(first_name=first_name, email=email, username=username, password=password)
-      profile = Profile.objects.create(tipoAcesso=tipoAcesso, user=user)
-      return redirect(profile)
-    return render(request, 'registration/novo.html', {})
+    num_users_with_same_email = User.objects.filter(email=email).count()
+    num_users_with_same_username =  User.objects.filter(username=username).count()
+
+    if num_users_with_same_email != 0 and num_users_with_same_username != 0:
+      messages.error(request, 'Usuário e E-mail já existem.')
+    elif num_users_with_same_username != 0:
+      messages.error(request, 'Usuário já existe.')
+    elif num_users_with_same_email != 0:
+      messages.error(request, 'Usuário com o mesmo e-mail já existe.')
+    else:
+      if first_name and email and username and password and tipoAcesso:
+        user = User.objects.create(first_name=first_name, email=email, username=username, password=password)
+        profile = Profile.objects.create(tipoAcesso=tipoAcesso, user=user)
+        return redirect(profile)
+    return render(request, 'registration/novo.html', {
+      'first_name': first_name,
+      'email': email,
+      'username': username,
+      'password': password,
+      'tipoAcesso': tipoAcesso,
+      'role_choices': Profile.ROLE_CHOICES,
+      })
 
 def edit(request):
   if request.method == "GET":

@@ -1,12 +1,14 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+# -*- coding: utf-8 -*-
+
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from acidentes.models import Acidente
 from datetime import datetime
+from django.contrib import messages 
 
 # Create your views here.
 def index(request):
-  acidentes = Acidente.objects.all()
+  acidentes = Acidente.objects.exclude(status="removido")
   return render(request, 'acidentes/index.html', {'acidentes': acidentes})
 
 def detail(request):
@@ -21,13 +23,18 @@ def new(request):
     dataHora = request.POST.get("dataHora", "")
     local = request.POST.get("local", "")
     descricao = request.POST.get("descricao", "")
+    SVCid = request.POST.get("SVCid", "")
+    if not "http://" in SVCid:
+      SVCid = "http://" + SVCid
     if dataHora and local and descricao:
-      dataHora = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
-      acidente = Acidente.objects.create(dataHora=dataHora, local=local, descricao=descricao)
-      acidente.coordenador = request.user
-      acidente.save()
-      return redirect(acidente)
-    return render(request, 'acidentes/novo.html', {})
+      dataHoraFormatada = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
+      num_results = Acidente.objects.filter(dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao).exclude(status="removido").count()
+      if num_results == 0:
+        acidente = Acidente.objects.create(coordenador=request.user, dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao)
+        return redirect(acidente)
+      else:
+        messages.error(request, 'Acidente já existe.')
+    return render(request, 'acidentes/novo.html', {'dataHora': dataHora, 'local': local, 'descricao': descricao, 'SVCid': SVCid})
 
 def edit(request):
   if request.method == "GET":
@@ -43,10 +50,16 @@ def edit(request):
     acidente.dataHora = dataHora
     acidente.local = request.POST.get("local", "")
     acidente.descricao = request.POST.get("descricao", "")
+    acidente.SVCid = request.POST.get("SVCid", "")
     acidente.save()
     return redirect(acidente)
 
 def delete(request):
   acidenteId = request.GET.get("id", "")
-  Acidente.objects.get(id=acidenteId).delete()
+  acidente = Acidente.objects.get(id=acidenteId)
+  acidente.status = "removido"
+  for missao in acidente.missao_set.exclude(status="removido"):
+    missao.status = "removido"
+    missao.save()
+  acidente.save()
   return redirect('acidentes')

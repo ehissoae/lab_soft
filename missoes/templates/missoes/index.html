@@ -11,16 +11,20 @@
       <th>Nome</th>
       <th>Tipo</th>
       <th>Status</th>
-      <th></th>
-      <th></th>
+      <th>Recursos alocados</th>
       <th></th>
     </tr>
     {% for missao in missoes %}
       <tr>
         <td>{{missao.nome}}</td>
-        <td>{{missao.tipoMissao}}</td>
-        <td>{{missao.status}}</td>
-        <td><a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a>
+        <td>{{missao.get_tipoMissao_display}}</td>
+        <td>{{missao.get_status_display}}</td>
+        {% if missao.recursos.count == 0 %}
+          <td> 0 </td>
+        {% else %}
+          <td><a href="/acidentes/missoes/detalhes?id={{missao.id}}">{{missao.recursos.count}}</a></td>
+        {% endif %}
+        <td class="btn-group btn-group-sm"><a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a>
         <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a>
         <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">alocar recurso</a>
         <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}">remover</a></td>

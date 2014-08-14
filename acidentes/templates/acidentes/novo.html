@@ -11,10 +11,20 @@
 	
 	<form action"/acidentes/novo" method="post">
     {% csrf_token %}
-    Data: <input type="text" name="dataHora" value="{% now 'd/m/Y H:i' %}" /><br/><br/>
-    Local: <input type="text" name="local" /><br/><br/>
+    {% if messages %}
+    	<div class="alert alert-danger">
+		    <ul class="list-unstyled">
+	        {% for message in messages %}
+	        	<li>{{ message }}</li>
+	        {% endfor %}
+		    </ul>
+		  </div>
+    {% endif %}
+    Data: <input type="text" name="dataHora" value="{% if dataHora %}{{ dataHora }}{% else %}{% now 'd/m/Y H:i' %}{% endif %}" /><br/><br/>
+    Local: <input type="text" name="local" value="{{local}}" /><br/><br/>
     Descricao:
-    <br/><textarea name="descricao" rows="4" cols="50"></textarea><br/>
+    <br/><textarea name="descricao" rows="4" cols="50">{{descricao}}</textarea><br/>
+    Link SVC: <input type="text" name="SVCid" value="{{SVCid}}"/><br/><br/>
     <input type="submit" value="Cadastrar">
 	</form>
 	

@@ -12,32 +12,33 @@
   	<a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">cadastrar nova missão</a>
 	<br/><br/>
 
-  	<table class="table">
-	    <tr>
-	      <th>Data</th>
-	      <th>Local</th>
-	      <th>Descrição</th>
-	      <th>Status</th>
-	      <th>Coordenador</th>
-	      <th>Especialista</th>
-	      <th>Número de missões</th>
-	    </tr>
-	    <tr>
-	      <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
-	      <td>{{acidente.local}}</td>
-	      <td>{{acidente.descricao}}</td>
-	      <td>{{acidente.status}}</td>
-	      <td>{{acidente.coordenador}}</td>
-	      <td>{{acidente.especialista}}</td>
-	      {% if acidente.missao_set.count == 0 %}
-	        <td> 0 </td>
-	      {% else %}
-	        <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
-	      {% endif %}
-	    </tr>
-  	</table>
-  	
-  	<p>Video(teste)</p>
-  	<iframe id="iframevav-cam" frameborder="no" width="640" height="390" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/transito-av-paulista?type_embed=camera"></iframe>
-  	
+	<table class="table">
+    <tr>
+      <th>Data</th>
+      <th>Local</th>
+      <th>Descrição</th>
+      <th>Status</th>
+      <th>Coordenador</th>
+      <th>Especialista</th>
+      <th>Link SVC</th>
+      <th>Número de missões</th>
+    </tr>
+    <tr>
+      <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
+      <td>{{acidente.local}}</td>
+      <td>{{acidente.descricao}}</td>
+      <td>{{acidente.get_status_display}}</td>
+      <td>{{acidente.coordenador}}</td>
+      <td>{{acidente.especialista}}</td>
+      <td>{{acidente.SVCid}}</td>
+      {% if acidente.missao_set.count == 0 %}
+        <td> 0 </td>
+      {% else %}
+        <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
+      {% endif %}
+    </tr>
+	</table>
+
+	<h3>Câmera SVC<h3>
+	<iframe src="{{acidente.SVCid}}"  scrolling='no' frameborder='0' style="overflow: scroll;width: 640px; height:390px;overflow:hidden">Aguarde...</iframe>
 {% endblock %}

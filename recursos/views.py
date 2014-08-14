@@ -1,16 +1,19 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from recursos.models import Recurso
 from SiGeCAV.utils import *
+from django.contrib import messages 
 
 # Create your views here.
 def index(request):
   url = url_if_not_authenticated(request)
   if(url):
     return url
-  recursos = Recurso.objects.all()
+  recursos = Recurso.objects.exclude(status="removido")
   tipoAcesso = request.user.profile.tipoAcesso
   return render(request, 'recursos/index.html', {
-    "tipoAcesso":tipoAcesso, 
+    "tipoAcesso": tipoAcesso, 
     'recursos': recursos
     })
 
@@ -35,10 +38,13 @@ def new(request):
     descricao = request.POST.get("descricao", "")
 
     if tipoRecurso and nome and telefone:
-      recurso = Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
-      return redirect(recurso)
-      
-    render(request, 'recursos/novo.html', {
+      num_results = Recurso.objects.filter(nome=nome, tipoRecurso=tipoRecurso).exclude(status="removido").count()
+      if num_results == 0:
+        Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
+        return redirect(recurso)
+      else:
+        messages.error(request, 'Recurso já existe.')
+    return render(request, 'recursos/novo.html', {
       'resources_types': Recurso.RESOURCES_TYPES,
       'resources_statuses': Recurso.RESOURCES_STATUSES,
       })
@@ -67,5 +73,7 @@ def edit(request):
 
 def delete(request):
   recursoId = request.GET.get("id", "")
-  Recurso.objects.get(id=recursoId).delete()
+  recurso = Recurso.objects.get(id=recursoId)
+  recurso.status = "removido"
+  recurso.save()
   return redirect('recursos')

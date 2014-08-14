@@ -31,7 +31,7 @@ def new(request):
       num_results = Acidente.objects.filter(dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao).exclude(status="removido").count()
       if num_results == 0:
         acidente = Acidente.objects.create(coordenador=request.user, dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao)
-        return redirect("/acidentes")
+        return redirect(acidente)
       else:
         messages.error(request, 'Acidente já existe.')
     return render(request, 'acidentes/novo.html', {'dataHora': dataHora, 'local': local, 'descricao': descricao, 'SVCid': SVCid})
@@ -52,7 +52,7 @@ def edit(request):
     acidente.descricao = request.POST.get("descricao", "")
     acidente.SVCid = request.POST.get("SVCid", "")
     acidente.save()
-    return render(request, 'acidentes/detalhes.html', {'acidente': acidente})
+    return redirect(acidente)
 
 def delete(request):
   acidenteId = request.GET.get("id", "")
@@ -62,4 +62,4 @@ def delete(request):
     missao.status = "removido"
     missao.save()
   acidente.save()
-  return redirect("/acidentes")
+  return redirect('acidentes')

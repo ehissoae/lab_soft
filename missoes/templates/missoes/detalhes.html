@@ -1,8 +1,8 @@
 {% extends "SiGeCAV/base.html" %}
 
-{% block title %}SiGeCAV - Missões{% endblock %}
+{% block title %}SiGeCAV - Detalhe da missão{% endblock %}
 
-{% block header %}Missões{% endblock %}
+{% block header %}Detalhe da missão{% endblock %}
 
 {% block content %}
 
@@ -20,7 +20,7 @@
       <td>{{missao.get_tipoMissao_display}}</td>
       <td>{{missao.get_status_display}}</td>
       <td>
-          {% if missao.recursos %}
+          {% if missao.recursos.count %}
             <ul class="list-unstyled">
               {% for alocacaoRecurso in alocacoesRecurso %}
                 <li><a href="/acidentes/missoes/detalhesRecursoAlocado?id={{alocacaoRecurso.id}}">{{ alocacaoRecurso.recurso}}</a> <a href="/acidentes/missoes/removerRecursoAlocado?id={{alocacaoRecurso.id}}"><small>remover</small></a></li>

@@ -41,7 +41,7 @@ def new(request):
       num_results = Recurso.objects.filter(nome=nome, tipoRecurso=tipoRecurso).exclude(status="removido").count()
       if num_results == 0:
         Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
-        return index(request)
+        return redirect(recurso)
       else:
         messages.error(request, 'Recurso já existe.')
     return render(request, 'recursos/novo.html', {
@@ -69,15 +69,11 @@ def edit(request):
     recurso.quantidadeTotal = request.POST.get("quantidadeTotal", 0)
     recurso.descricao = request.POST.get("descricao", "")
     recurso.save()
-    return render(request, 'recursos/detalhes.html', {
-      'recurso': recurso,
-      'resources_types': Recurso.RESOURCES_TYPES,
-      'resources_statuses': Recurso.RESOURCES_STATUSES,
-      })
+    return redirect(recurso)
 
 def delete(request):
   recursoId = request.GET.get("id", "")
   recurso = Recurso.objects.get(id=recursoId)
   recurso.status = "removido"
   recurso.save()
-  return redirect("/recursos")
+  return redirect('recursos')

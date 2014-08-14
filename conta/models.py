@@ -13,3 +13,5 @@ class Profile(models.Model):
                                 choices=ROLE_CHOICES, 
                                 default="coordenador")
 
+  def get_absolute_url(self):
+    return "/conta/detalhes?id=" + str(self.user.id)

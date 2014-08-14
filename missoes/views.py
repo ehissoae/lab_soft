@@ -34,7 +34,7 @@ def new(request):
     acidenteId = request.POST.get("acidente_id", "")
     if nome and tipoMissao and acidenteId:
       acidente = Acidente.objects.get(id=acidenteId)
-      Missao.objects.create(nome=nome, tipoMissao=tipoMissao, acidente_id=acidenteId)
+      missao = Missao.objects.create(nome=nome, tipoMissao=tipoMissao, acidente_id=acidenteId)
 
       if acidente.especialista == None:
         acidente.especialista = request.user
@@ -44,7 +44,7 @@ def new(request):
         acidente.status = 'emAndamento'
         acidente.save()
 
-      return index2(request, acidenteId)
+      return redirect(missao)
     return render(request, 'missoes/novo.html', {})
 
 def changeStatus(request):
@@ -60,7 +60,7 @@ def changeStatus(request):
     missao = Missao.objects.get(id=missaoId)
     missao.status = request.POST.get("status", "")
     missao.save()
-    return render(request, 'missoes/detalhes.html', {'missao': missao})
+    return redirect(missao)
 
 def delete(request):
   missaoId = request.GET.get("id", "")
@@ -69,12 +69,7 @@ def delete(request):
   missao.status = "removido"
   AlocacaoRecurso.objects.filter(missao_id=missaoId).delete()
   missao.save()
-  return index2(request, acidenteId)
-
-def index2(request, acidenteId):
-  acidente = Acidente.objects.get(id=acidenteId)
-  missoes = acidente.missao_set.exclude(status="removido")
-  return render(request, 'missoes/index.html', {'acidente': acidente, 'missoes': missoes})
+  return redirect('/acidentes/missoes?acidente_id=' + str(acidenteId))
 
 def assignResource(request):
   recursos = Recurso.objects.exclude(status="removido")
@@ -97,7 +92,7 @@ def assignResource(request):
     if recursoId and missaoId:
       AlocacaoRecurso.objects.create(recurso_id=recursoId, missao_id=missaoId, quantidadeAlocada=quantidadeAlocada, observacao=observacao)
       if not another_one:
-        return redirect('/acidentes/missoes/detalhes?id=' + missaoId)
+        return redirect(missao)
     missao = Missao.objects.get(id=missaoId)
     acidente = missao.acidente
     return render(request, 'missoes/alocarRecurso.html', {'acidente':acidente, 'missao':missao, 'recursos':recursos})
@@ -110,6 +105,6 @@ def assignedResourceDetails(request):
 def deleteAssignedResource(request):
   alocacaoRecursoId = request.GET.get("id", "")
   alocacaoRecurso = AlocacaoRecurso.objects.get(id=alocacaoRecursoId)
-  missaoId = alocacaoRecurso.missao.id
+  missao = alocacaoRecurso.missao
   alocacaoRecurso.delete()
-  return redirect("/acidentes/missoes/detalhes?id=" + str(missaoId))
+  return redirect(missao)

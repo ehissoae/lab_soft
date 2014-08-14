@@ -14,7 +14,12 @@
     E-mail: <input type="text" name="email"/><br/>
     Usuário: <input type="text" name="username" /><br/>
     Senha: <input type="text" name="password" /><br/>
-    confirma ae <br />
+    Tipo Acesso: <select name="tipoAcesso">
+        {% for key, value in role_choices %}
+          <option value="{{key}}">{{ value }}</option>
+        {% endfor %}
+      </select>
+
     <input type="submit" value="Cadastrar">
   </form>
 

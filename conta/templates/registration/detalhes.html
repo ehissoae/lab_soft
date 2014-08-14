@@ -19,7 +19,7 @@
     <tr>
       <td>{{usuario.first_name}} {{usuario.last_name}}</td>
       <td>{{usuario.email}}</td>
-      <td>{{usuario.profile.tipoAcesso}}</td>
+      <td>{{usuario.profile.get_tipoAcesso_display}}</td>
       <td>
         <a class="btn btn-default" href="/conta/detalhes?id={{usuario.id}}">detalhar</a>
         <a class="btn btn-default" href="/conta/editar?id={{usuario.id}}">editar</a>

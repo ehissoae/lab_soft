@@ -26,15 +26,17 @@ def detail(request):
 def new(request):
   roles = Profile.ROLE_CHOICES
   if request.method == "GET":
-    return render(request, 'registration/novo.html', {})
+    return render(request, 'registration/novo.html', {'role_choices': Profile.ROLE_CHOICES})
   elif request.method == "POST":
     first_name = request.POST.get("firstName", "")
     email = request.POST.get("email", "")
     username = request.POST.get("username", "")
     password = request.POST.get("password", "")
+    tipoAcesso = request.POST.get("tipoAcesso", "")
 
-    if first_name and email and username and password:
-      User.objects.create(first_name=first_name, email=email, username=username, password=password)
+    if first_name and email and username and password and tipoAcesso:
+      user = User.objects.create(first_name=first_name, email=email, username=username, password=password)
+      profile = Profile.objects.create(tipoAcesso=tipoAcesso, user=user)
       return index(request)
     return render(request, 'registration/novo.html', {})
 
@@ -42,7 +44,7 @@ def edit(request):
   if request.method == "GET":
     usuarioId = request.GET.get("id", "")
     usuario = User.objects.get(id=usuarioId)
-    return render(request, 'registration/editar.html', {'usuario': usuario})
+    return render(request, 'registration/editar.html', {'usuario': usuario, 'role_choices': Profile.ROLE_CHOICES})
   elif request.method == "POST":
     usuarioId = request.POST.get("id", "")
     usuario = User.objects.get(id=usuarioId)

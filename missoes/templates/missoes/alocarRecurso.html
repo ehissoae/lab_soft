@@ -6,7 +6,7 @@
 
 {% block content %}
 
-  <form action"{% url 'alocar_recurso' %}" method="post">
+  <form action"{% url 'missaoAlocarRecurso' %}" method="post">
     {% csrf_token %}
 
     Acidente: {{acidente.local}} <br />

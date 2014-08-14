@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from acidentes.models import Acidente
 from datetime import datetime
 from django.contrib import messages 
@@ -29,7 +30,7 @@ def new(request):
       dataHoraFormatada = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
       num_results = Acidente.objects.filter(dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao).exclude(status="removido").count()
       if num_results == 0:
-        Acidente.objects.create(dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao)
+        acidente = Acidente.objects.create(coordenador=request.user, dataHora=dataHoraFormatada, local=local, SVCid=SVCid, descricao=descricao)
         return redirect("/acidentes")
       else:
         messages.error(request, 'Acidente já existe.')

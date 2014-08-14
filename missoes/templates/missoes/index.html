@@ -17,8 +17,8 @@
     {% for missao in missoes %}
       <tr>
         <td>{{missao.nome}}</td>
-        <td>{{missao.tipoMissao}}</td>
-        <td>{{missao.status}}</td>
+        <td>{{missao.get_tipoMissao_display}}</td>
+        <td>{{missao.get_status_display}}</td>
         {% if missao.recursos.count == 0 %}
           <td> 0 </td>
         {% else %}

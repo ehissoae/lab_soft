@@ -1,0 +1,26 @@
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Novo Usuário{% endblock %}
+
+{% block header %}Novo Usuário{% endblock %}
+
+{% block content %}
+  <a href="{% url 'usuarios' %}">voltar</a>
+
+  <form action"{% url 'recursoNovo' %}" method="post">
+    {% csrf_token %}
+
+    Nome: <input type="text" name="firstName" /><br/>
+    E-mail: <input type="text" name="email"/><br/>
+    Usuário: <input type="text" name="username" /><br/>
+    Senha: <input type="text" name="password" /><br/>
+    Tipo Acesso: <select name="tipoAcesso">
+        {% for key, value in role_choices %}
+          <option value="{{key}}">{{ value }}</option>
+        {% endfor %}
+      </select>
+
+    <input type="submit" value="Cadastrar">
+  </form>
+
+{% endblock %}

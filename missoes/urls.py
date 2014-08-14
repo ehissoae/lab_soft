@@ -4,11 +4,11 @@ from missoes import views
 
 urlpatterns = [
     url(r'^$', views.index, name='missoes'),
-    url(r'^detalhes$', views.detail, name='detalhes'),
-    url(r'^novo$', views.new, name='novo'),
-    url(r'^alterarStatus$', views.changeStatus, name='alterar_status'),
-    url(r'^alocarRecurso$', views.assignResource, name='alocar_recurso'),
-    url(r'^detalhesRecursoAlocado$', views.assignedResourceDetails, name='detalhes_recurso_alocado'),
-    url(r'^removerRecursoAlocado$', views.deleteAssignedResource, name='remover_recurso_alocado'),
-    url(r'^remover$', views.delete, name='remover'),
+    url(r'^detalhes$', views.detail, name='missaoDetalhes'),
+    url(r'^novo$', views.new, name='missaoNovo'),
+    url(r'^alterarStatus$', views.changeStatus, name='missaoAlterarStatus'),
+    url(r'^alocarRecurso$', views.assignResource, name='missaoAlocarRecurso'),
+    url(r'^detalhesRecursoAlocado$', views.assignedResourceDetails, name='missaoDetalhesRecursoAlocado'),
+    url(r'^removerRecursoAlocado$', views.deleteAssignedResource, name='missaoRemoverRecursoAlocado'),
+    url(r'^remover$', views.delete, name='missaoRemover'),
 ]

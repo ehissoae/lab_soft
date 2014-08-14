@@ -11,6 +11,9 @@ class Missao(models.Model):
   def __unicode__(self):
     return self.nome
 
+  def get_absolute_url(self):
+    return "/acidentes/missoes/detalhes?id=" + str(self.id)
+
 class AlocacaoRecurso(models.Model):
   recurso = models.ForeignKey("recursos.Recurso")
   missao = models.ForeignKey("missoes.Missao")

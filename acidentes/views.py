@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from acidentes.models import Acidente
 from datetime import datetime
@@ -25,7 +26,7 @@ def new(request):
       acidente = Acidente.objects.create(dataHora=dataHora, local=local, descricao=descricao)
       acidente.coordenador = request.user
       acidente.save()
-      return index(request)
+      return redirect(acidente)
     return render(request, 'acidentes/novo.html', {})
 
 def edit(request):
@@ -43,9 +44,9 @@ def edit(request):
     acidente.local = request.POST.get("local", "")
     acidente.descricao = request.POST.get("descricao", "")
     acidente.save()
-    return render(request, 'acidentes/detalhes.html', {'acidente': acidente})
+    return redirect(acidente)
 
 def delete(request):
   acidenteId = request.GET.get("id", "")
   Acidente.objects.get(id=acidenteId).delete()
-  return index(request)
+  return redirect('acidentes')

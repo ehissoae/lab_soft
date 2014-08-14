@@ -37,26 +37,37 @@ def new(request):
     if first_name and email and username and password and tipoAcesso:
       user = User.objects.create(first_name=first_name, email=email, username=username, password=password)
       profile = Profile.objects.create(tipoAcesso=tipoAcesso, user=user)
-      return index(request)
+      return redirect(profile)
     return render(request, 'registration/novo.html', {})
 
 def edit(request):
   if request.method == "GET":
-    usuarioId = request.GET.get("id", "")
-    usuario = User.objects.get(id=usuarioId)
-    return render(request, 'registration/editar.html', {'usuario': usuario, 'role_choices': Profile.ROLE_CHOICES})
+    userId = request.GET.get("id", "")
+    user = User.objects.get(id=userId)
+    return render(request, 'registration/editar.html', {'usuario': user, 'role_choices': Profile.ROLE_CHOICES})
   elif request.method == "POST":
-    usuarioId = request.POST.get("id", "")
-    usuario = User.objects.get(id=usuarioId)
+    userId = request.POST.get("id", "")
+    user = User.objects.get(id=userId)
 
-    usuario.first_name = request.POST.get("firstName", "")
-    usuario.email = request.POST.get("email", "")
-    usuario.username = request.POST.get("username", "")
-    usuario.password = request.POST.get("password", "")
-    usuario.save()
-    return render(request, 'registration/detalhes.html', {'usuario': usuario})
+    user.first_name = request.POST.get("firstName", "")
+    user.email = request.POST.get("email", "")
+    user.username = request.POST.get("username", "")
+
+    tipoAcesso = request.POST.get("tipoAcesso", "")
+    if Profile.objects.filter(id=user.id).count():
+      user.profile.tipoAcesso = tipoAcesso
+    else:
+      Profile.objects.create(user=user, tipoAcesso=tipoAcesso)
+
+    newPassword = request.POST.get("newPassword", "")
+    if newPassword:
+      user.set_password(newPassword)
+
+    user.save()
+    user.profile.save()
+    return redirect(user.profile)
 
 def delete(request):
   usuarioId = request.GET.get("id", "")
   User.objects.get(id=usuarioId).delete()
-  return index(request)
+  return redirect('usuarios')

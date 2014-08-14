@@ -17,9 +17,6 @@ class Recurso(models.Model):
   quantidadeTotal = models.IntegerField(null=True, blank=True)
   descricao = models.CharField(max_length=200)
 
-  def __unicode__(self):
-    return self.get_tipoRecurso_display() + " - " + self.nome
-
   def quantidadeDisponivel(self):
     alocados = AlocacaoRecurso.objects.filter(recurso_id=self.id)
     quantidadeAlocada = 0
@@ -29,3 +26,9 @@ class Recurso(models.Model):
         if qtd > 0:
           quantidadeAlocada += qtd
     return self.quantidadeTotal - quantidadeAlocada
+
+  def __unicode__(self):
+    return self.get_tipoRecurso_display() + " - " + self.nome
+
+  def get_absolute_url(self):
+    return "/recursos/detalhes?id=" + str(self.id)

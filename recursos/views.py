@@ -35,9 +35,10 @@ def new(request):
     descricao = request.POST.get("descricao", "")
 
     if tipoRecurso and nome and telefone:
-      Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
-      return index(request)
-    return render(request, 'recursos/novo.html', {
+      recurso = Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
+      return redirect(recurso)
+      
+    render(request, 'recursos/novo.html', {
       'resources_types': Recurso.RESOURCES_TYPES,
       'resources_statuses': Recurso.RESOURCES_STATUSES,
       })
@@ -62,13 +63,9 @@ def edit(request):
     recurso.quantidadeTotal = request.POST.get("quantidadeTotal", 0)
     recurso.descricao = request.POST.get("descricao", "")
     recurso.save()
-    return render(request, 'recursos/detalhes.html', {
-      'recurso': recurso,
-      'resources_types': Recurso.RESOURCES_TYPES,
-      'resources_statuses': Recurso.RESOURCES_STATUSES,
-      })
+    return redirect(recurso)
 
 def delete(request):
   recursoId = request.GET.get("id", "")
   Recurso.objects.get(id=recursoId).delete()
-  return index(request)
+  return redirect('recursos')

@@ -12,3 +12,6 @@ class Acidente(models.Model):
 
   def __unicode__(self):
     return self.local
+
+  def get_absolute_url(self):
+    return "/acidentes/detalhes?id=" + str(self.id)

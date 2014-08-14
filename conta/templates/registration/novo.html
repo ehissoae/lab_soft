@@ -9,14 +9,23 @@
 
   <form action"{% url 'recursoNovo' %}" method="post">
     {% csrf_token %}
+    {% if messages %}
+      <div class="alert alert-danger">
+        <ul class="list-unstyled">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
 
-    Nome: <input type="text" name="firstName" /><br/>
-    E-mail: <input type="text" name="email"/><br/>
-    Usuário: <input type="text" name="username" /><br/>
-    Senha: <input type="text" name="password" /><br/>
+    Nome: <input type="text" name="firstName" value="{{first_name}}" /><br/>
+    E-mail: <input type="email" name="email" value="{{email}}" /><br/>
+    Usuário: <input type="text" name="username" value="{{username}}" /><br/>
+    Senha: <input type="password" name="password" value="{{password}}" /><br/>
     Tipo Acesso: <select name="tipoAcesso">
         {% for key, value in role_choices %}
-          <option value="{{key}}">{{ value }}</option>
+          <option value="{{key}}" {%ifequal key tipoAcesso%}selected{%endifequal%}>{{ value }}</option>
         {% endfor %}
       </select>
 

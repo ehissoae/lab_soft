@@ -33,20 +33,28 @@ def new(request):
     password = request.POST.get("password", "")
     tipoAcesso = request.POST.get("tipoAcesso", "")
 
-    if first_name and email and username and password and tipoAcesso:
-      num_users_with_same_email = User.objects.filter(email=email).count()
-      num_users_with_same_username =  User.objects.filter(username=username).count()
-      if num_users_with_same_email + num_users_with_same_username == 0:
+    num_users_with_same_email = User.objects.filter(email=email).count()
+    num_users_with_same_username =  User.objects.filter(username=username).count()
+
+    if num_users_with_same_email != 0 and num_users_with_same_username != 0:
+      messages.error(request, 'Usuário e E-mail já existem.')
+    elif num_users_with_same_username != 0:
+      messages.error(request, 'Usuário já existe.')
+    elif num_users_with_same_email != 0:
+      messages.error(request, 'Usuário com o mesmo e-mail já existe.')
+    else:
+      if first_name and email and username and password and tipoAcesso:
         user = User.objects.create(first_name=first_name, email=email, username=username, password=password)
         profile = Profile.objects.create(tipoAcesso=tipoAcesso, user=user)
         return redirect(profile)
-      elif num_users_with_same_username != 0:
-        messages.error(request, 'Usuário já existe.')
-      elif num_users_with_same_email != 0:
-        messages.error(request, 'Usuário com o mesmo e-mail já existe.')
-      else:
-        messages.error(request, 'Usuário e E-mail já existem.')
-    return render(request, 'registration/novo.html', {})
+    return render(request, 'registration/novo.html', {
+      'first_name': first_name,
+      'email': email,
+      'username': username,
+      'password': password,
+      'tipoAcesso': tipoAcesso,
+      'role_choices': Profile.ROLE_CHOICES,
+      })
 
 def edit(request):
   if request.method == "GET":

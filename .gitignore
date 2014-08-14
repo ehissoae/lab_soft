@@ -39,3 +39,4 @@ Thumbs.db
 
 #HEROKU
 myenv/
+local_settings.py

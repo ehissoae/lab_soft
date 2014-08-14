@@ -80,13 +80,13 @@ WSGI_APPLICATION = 'SiGeCAV.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_db',
-        'USER': 'djangouser',
-        'PASSWORD': 'mypassword',
-        'HOST': '',
-        'PORT': '',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "django_db",
+        "USER": "postgres",
+        "PASSWORD": "psql",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 

@@ -11,8 +11,10 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SiGeCAV.settings")
 
 from django.core.wsgi import get_wsgi_application
-# ---- HEROKU
-from dj_static import Cling
 
-application = Cling(get_wsgi_application())
 # ---- HEROKU
+# from dj_static import Cling
+
+# application = Cling(get_wsgi_application()) 
+# ---- HEROKU
+application = get_wsgi_application()

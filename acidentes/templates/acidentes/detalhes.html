@@ -7,7 +7,7 @@
 {% block content %}
 
 	<a class="btn btn-default" href="/acidentes"><img src="https://cdn0.iconfinder.com/data/icons/typicons-2/24/arrow-back-24.png" /></a>
-	<a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}">remover</a>
+	<a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
   	<a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
   	<a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">cadastrar nova missão</a>
 	<br/><br/>
@@ -31,13 +31,20 @@
       <td>{{acidente.coordenador}}</td>
       <td>{{acidente.especialista}}</td>
       <td>{{acidente.SVCid}}</td>
-      {% if acidente.missao_set.count == 0 %}
+      {% if acidente.missoes_ativas.count == 0 %}
         <td> 0 </td>
       {% else %}
-        <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
+        <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missoes_ativas.count}}</a></td>
       {% endif %}
     </tr>
 	</table>
+
+  <h3>Missões para o Acidente <a class="small text-primary" href="/acidentes/missoes?acidente_id={{acidente.id}}">(total:{{acidente.missoes_ativas.count}})</a></h3>
+  <ul class="list-unstyled">
+    {% for missao in acidente.missoes_ativas %}
+      <li><a href="/acidentes/missoes/detalhes?id={{missao.id}}">{{missao.nome}} - {{missao.tipoMissao}}</a></li>
+    {% endfor %}
+  </ul>
 
 	<h3>Câmera SVC<h3>
 	<iframe src="{{acidente.SVCid}}"  scrolling='no' frameborder='0' style="overflow: scroll;width: 640px; height:390px;overflow:hidden">Aguarde...</iframe>

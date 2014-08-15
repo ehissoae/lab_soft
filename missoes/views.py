@@ -3,6 +3,7 @@ from missoes.models import Missao, AlocacaoRecurso
 from recursos.models import Recurso
 from acidentes.models import Acidente
 from SiGeCAV.utils import *
+from django.db.models import Q
 
 # Create your views here.
 def index(request):
@@ -73,6 +74,11 @@ def changeStatus(request):
     missao = Missao.objects.get(id=missaoId)
     missao.status = request.POST.get("status", "")
     missao.save()
+    allMissionsCompleted = missao.acidente.missao_set.filter(Q(status="aguardandoRecursos") | Q(status="emAndamento")).count() == 0
+    if allMissionsCompleted:
+      acidente = missao.acidente
+      acidente.status = "finalizado"
+      acidente.save()
     return redirect(missao)
 
 def delete(request):

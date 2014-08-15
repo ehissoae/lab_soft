@@ -22,11 +22,12 @@
         <td>{{recurso.get_tipoRecurso_display}}</td>
         <td>{{recurso.telefone}}</td>
         <td>{% firstof recurso.quantidadeTotal "---" %}</td>
+        
         {% if user.profile.tipoAcesso == 'administrador' %}
           <td>
             <a class="btn btn-default" href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
             <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
-            <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}">remover</a>
+            <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}} onclick="return confirm('Tem certeza de que deseja remover o recurso?');"">remover</a>
           </td>
         {% endif %}
       </tr>

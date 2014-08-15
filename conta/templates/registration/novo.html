@@ -19,10 +19,10 @@
       </div>
     {% endif %}
 
-    Nome: <input type="text" name="firstName" value="{{first_name}}" /><br/>
-    E-mail: <input type="email" name="email" value="{{email}}" /><br/>
-    Usuário: <input type="text" name="username" value="{{username}}" /><br/>
-    Senha: <input type="password" name="password" value="{{password}}" /><br/>
+    Nome: <input type="text" name="firstName" value="{{first_name}}" required /><br/>
+    E-mail: <input type="email" name="email" value="{{email}}" required /><br/>
+    Usuário: <input type="text" name="username" value="{{username}}" required /><br/>
+    Senha: <input type="password" name="password" value="{{password}}" required /><br/>
     Tipo Acesso: <select name="tipoAcesso">
         {% for key, value in role_choices %}
           <option value="{{key}}" {%ifequal key tipoAcesso%}selected{%endifequal%}>{{ value }}</option>

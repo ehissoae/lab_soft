@@ -20,15 +20,15 @@
       </div>
     {% endif %}
 
-    Nome: <input type="text" name="nome" /><br/>
+    Nome: <input type="text" name="nome" required /><br/>
     Tipo: <select class="js-resource-type" name="tipoRecurso">
         {% for key, value in resources_types %}
           <option value="{{key}}">{{ value }}</option>
         {% endfor %}
       </select>
-    Telefone: <input type="text" name="telefone" /><br/>
+    Telefone: <input type="text" name="telefone" required /><br/>
     <div class="js-quantity">
-      Quantidade Total: <input type="number" name="quantidadeTotal" min="1"/><br/>
+      Quantidade Total: <input type="number" name="quantidadeTotal" min="1" required/><br/>
     </div>
 
     Descrição: <textarea name="descricao" rows="4" cols="50"></textarea>

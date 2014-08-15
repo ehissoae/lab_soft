@@ -2,7 +2,7 @@
 
 {% block title %}SiGeCAV - Detalhar Usuários{% endblock %}
 
-{% block header %}Detalhar de Usuários{% endblock %}
+{% block header %}Detalhes de Usuários{% endblock %}
 
 {% block content %}
   
@@ -23,7 +23,7 @@
       <td>
         <a class="btn btn-default" href="/conta/detalhes?id={{usuario.id}}">detalhar</a>
         <a class="btn btn-default" href="/conta/editar?id={{usuario.id}}">editar</a>
-        <a class="btn btn-default" href="/conta/remover?id={{usuario.id}}">remover</a>
+        <a class="btn btn-default" href="/conta/remover?id={{usuario.id}}" onclick="return confirm('Tem certeza de que deseja remover o usuário?');">remover</a>
       </td>
     </tr>
   </table>  

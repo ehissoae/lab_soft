@@ -6,11 +6,12 @@
 
 {% block content %}
 
-	<a class="btn btn-default" href="/acidentes"><img src="https://cdn0.iconfinder.com/data/icons/typicons-2/24/arrow-back-24.png" /></a>
-	<a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
-  	<a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
-  	<a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">cadastrar nova missão</a>
-	<br/><br/>
+  <div class="form-group">
+    <a class="btn btn-default" href="/acidentes"><i class="glyphicon glyphicon-arrow-left"></i></a>
+  	<a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+    <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
+    <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
+  </div>  
 
 	<table class="table">
     <tr>
@@ -39,10 +40,10 @@
     </tr>
 	</table>
 
-  <h3>Missões para o Acidente <a class="small text-primary" href="/acidentes/missoes?acidente_id={{acidente.id}}">(total:{{acidente.missoes_ativas.count}})</a></h3>
+  <h3>Missões para o Acidente <a class="small text-primary" href="/acidentes/missoes?acidente_id={{acidente.id}}">(total: {{acidente.missoes_ativas.count}})</a></h3>
   <ul class="list-unstyled">
     {% for missao in acidente.missoes_ativas %}
-      <li><a href="/acidentes/missoes/detalhes?id={{missao.id}}">{{missao.nome}} - {{missao.tipoMissao}}</a></li>
+      <li><a href="/acidentes/missoes/detalhes?id={{missao.id}}">{{missao.nome}} - {{missao.tipoMissao}} - {{missao.get_status_display}}</a></li>
     {% endfor %}
   </ul>
 

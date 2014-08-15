@@ -5,6 +5,10 @@
 {% block header %}Lista de Acidentes{% endblock %}
 
 {% block content %}
+  
+  <div class="form-group">
+    <a class="btn btn-primary" href="/acidentes/novo">Cadastrar Acidente</a>
+  </div>
 
 	<table class="table">
     <tr>
@@ -31,7 +35,8 @@
         
         {% if user.profile.tipoAcesso == 'especialista' %}
           <td>
-            <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar nova missão</a>
+            <a class="btn btn-default" href="/acidentes/detalhes?id={{acidente.id}}">Detalhar</a>
+            <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
           </td>
         {% endif %}
 
@@ -46,7 +51,5 @@
       </tr>
     {%endfor%}
   </table>
-
-  <a class="btn btn-default" href="/acidentes/novo">Cadastrar Acidente</a>
   
 {% endblock %}

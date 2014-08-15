@@ -17,7 +17,7 @@
     Usuário: <input type="text" name="username" value="{{usuario.username}}" required /><br/>
     Tipo Acesso: <select name="tipoAcesso">
         {% for key, value in role_choices %}
-          <option value="{{key}}" {%ifequal key usuario.tipoAcesso%}selected{%endifequal%}>{{ value }}</option>
+          <option value="{{key}}" {%ifequal key usuario.profile.tipoAcesso%}selected{%endifequal%}>{{ value }}</option>
         {% endfor %}
       </select> 
     <br/><br/>  

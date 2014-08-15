@@ -1,11 +1,10 @@
-{% load staticfiles %}
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-  <h1>Alterar status da missão</h1>
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Missões - Alterar Status{% endblock %}
+
+{% block header %}Alterar Status da Missão{% endblock %}
+
+{% block content %}
 
   <form action"acidentes/missoes/editar" method="post">
     {% csrf_token %}
@@ -17,5 +16,5 @@
 	<br/>
     <input type="submit" value="Editar">
   </form>
-</body>
-<html>
+
+{% endblock %}

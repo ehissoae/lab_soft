@@ -13,10 +13,6 @@ def index(request):
   return render(request, 'acidentes/index.html', {'acidentes': acidentes})
 
 def detail(request):
-  url = url_if_not_coordenador(request)
-  if(url):
-    return url
-
   acidenteId = request.GET.get("id", "")
   acidente = Acidente.objects.get(id=acidenteId)
   missoes = acidente.missao_set.exclude(status="removido").all()

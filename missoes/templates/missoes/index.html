@@ -46,6 +46,8 @@
   </table>
 
   {% if user.profile.tipoAcesso == 'especialista' %}
-    <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missao</a>
+    {% if ((acidente.especialista is None) || (user.profile.id == acidente.especialista.id)) and acidente.aceita_novas_missoes %}
+      <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+    {% endif %}
   {% endif %}
 {% endblock %}

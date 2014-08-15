@@ -8,11 +8,11 @@ from conta.models import Profile
 from django.contrib import messages 
 
 def custom_login(request):
-	url = url_if_not_authenticated(request)
-	if(url):
-		return url
-		
-	return redirect(settings.LOGIN_REDIRECT_URL)
+  url = url_if_not_authenticated(request)
+  if(url):
+    return url
+    
+  return redirect(settings.LOGIN_REDIRECT_URL)
 
 def index(request):
   url = url_if_not_administrador(request)

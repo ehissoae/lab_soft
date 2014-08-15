@@ -9,14 +9,18 @@ from SiGeCAV.utils import *
 
 # Create your views here.
 def index(request):
+  url = url_if_not_authenticated(request)
+  if(url):
+    return url
+
   acidentes = Acidente.objects.exclude(status="removido")
   return render(request, 'acidentes/index.html', {'acidentes': acidentes})
 
 def detail(request):
-  url = url_if_not_coordenador(request)
+  url = url_if_not_authenticated(request)
   if(url):
     return url
-
+  
   acidenteId = request.GET.get("id", "")
   acidente = Acidente.objects.get(id=acidenteId)
   missoes = acidente.missao_set.exclude(status="removido").all()

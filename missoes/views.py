@@ -7,6 +7,10 @@ from django.db.models import Q
 
 # Create your views here.
 def index(request):
+  url = url_if_not_authenticated(request)
+  if(url):
+    return url
+
   acidenteId = request.GET.get("acidente_id", "")
   acidente = Acidente.objects.get(id=acidenteId)
   missoes = acidente.missao_set.exclude(status="removido")
@@ -17,7 +21,7 @@ def index(request):
   })
 
 def detail(request):
-  url = url_if_not_especialista(request)
+  url = url_if_not_authenticated(request)
   if(url):
     return url
 

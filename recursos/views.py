@@ -15,7 +15,7 @@ def index(request):
     })
 
 def detail(request):
-  url = url_if_not_administrador(request)
+  url = url_if_not_authenticated(request)
   if(url):
     return url
 

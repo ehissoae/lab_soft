@@ -6,7 +6,9 @@
 
 {% block content %}
 
-	<a class="btn btn-default" href="/acidentes"><img src="https://cdn0.iconfinder.com/data/icons/typicons-2/24/arrow-back-24.png" /></a>
+{% load staticfiles %}
+
+	<a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /></a>
 	<a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
   	<a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
   	<a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">cadastrar nova missão</a>

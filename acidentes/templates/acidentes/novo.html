@@ -6,7 +6,9 @@
 
 {% block content %}
 
-	<a class="btn btn-default" href="/acidentes"><img src="https://cdn0.iconfinder.com/data/icons/typicons-2/24/arrow-back-24.png" /></a>
+{% load staticfiles %}
+
+	<a class="btn btn-default" href="/acidentes"><img src="{% static 'images/back.png' %}" /></a>
 	<br/><br/>
 	
 	<form action"/acidentes/novo" method="post">

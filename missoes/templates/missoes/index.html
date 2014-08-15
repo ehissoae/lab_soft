@@ -5,7 +5,15 @@
 {% block header %}Missões{% endblock %}
 
 {% block content %}
-  <a href="/acidentes">Voltar para acidentes</a>
+  <div class="form-group">
+    <a class="btn btn-default" href="/acidentes">Voltar para acidentes</a>
+
+    {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
+      {% if acidente.especialista == None or user.profile.id == acidente.especialista.id %}
+          <a class="btn btn-primary" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+      {% endif %}
+    {% endif %}
+  </div>
 
   <table class="table">
     <tr>
@@ -45,9 +53,4 @@
     {%endfor%}
   </table>
 
-  {% if user.profile.tipoAcesso == 'especialista' %}
-    {% if ((acidente.especialista is None) || (user.profile.id == acidente.especialista.id)) and acidente.aceita_novas_missoes %}
-      <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
-    {% endif %}
-  {% endif %}
 {% endblock %}

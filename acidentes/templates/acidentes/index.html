@@ -36,7 +36,11 @@
         {% if user.profile.tipoAcesso == 'especialista' %}
           <td>
             <a class="btn btn-default" href="/acidentes/detalhes?id={{acidente.id}}">Detalhar</a>
-            <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+            {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
+              {% if acidente.especialista == None or user.profile.id == acidente.especialista.id %}
+                <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+              {% endif %}
+            {% endif %}
           </td>
         {% endif %}
 

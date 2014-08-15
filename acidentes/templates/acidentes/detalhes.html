@@ -8,7 +8,11 @@
 
   <div class="form-group">
     <a class="btn btn-default" href="/acidentes"><i class="glyphicon glyphicon-arrow-left"></i></a>
-  	<a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+    {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
+      {% if acidente.especialista == None or user.profile.id == acidente.especialista.id %}
+        <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+      {% endif %}
+    {% endif %}
     <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
     <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
   </div>  
@@ -22,7 +26,6 @@
       <th>Coordenador</th>
       <th>Especialista</th>
       <th>Link SVC</th>
-      <th>Número de missões</th>
     </tr>
     <tr>
       <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
@@ -32,11 +35,6 @@
       <td>{{acidente.coordenador}}</td>
       <td>{{acidente.especialista}}</td>
       <td>{{acidente.SVCid}}</td>
-      {% if acidente.missoes_ativas.count == 0 %}
-        <td> 0 </td>
-      {% else %}
-        <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missoes_ativas.count}}</a></td>
-      {% endif %}
     </tr>
 	</table>
 
@@ -49,4 +47,5 @@
 
 	<h3>Câmera SVC<h3>
 	<iframe src="{{acidente.SVCid}}"  scrolling='no' frameborder='0' style="overflow: scroll;width: 640px; height:390px;overflow:hidden">Aguarde...</iframe>
+
 {% endblock %}

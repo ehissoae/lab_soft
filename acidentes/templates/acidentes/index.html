@@ -7,14 +7,12 @@
 {% block content %}
 
 	<table class="table">
-
     <tr>
       <th>Data</th>
       <th>Local</th>
       <th>Descrição</th>
+      <th>Status</th>
       <th>Número de missões</th>
-      <th></th>
-      <th></th>
       <th></th>
     </tr>
     {% for acidente in acidentes %}
@@ -22,10 +20,11 @@
         <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
         <td>{{acidente.local}}</td>
         <td>{{acidente.descricao}}</td>
-        {% if acidente.missao_set.count == 0 %}
+        <td>{{acidente.get_status_display}}</td>
+        {% if acidente.missoes_ativas.count == 0 %}
           <td> 0 </td>
         {% else %}
-          <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
+          <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missoes_ativas.count}}</a></td>
         {% endif %}
         <td><a class="btn btn-default" href="/acidentes/detalhes?id={{acidente.id}}">detalhar</a>
         <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar nova missão</a>

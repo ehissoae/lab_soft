@@ -14,7 +14,11 @@ def index(request):
 def detail(request):
   acidenteId = request.GET.get("id", "")
   acidente = Acidente.objects.get(id=acidenteId)
-  return render(request, 'acidentes/detalhes.html', {'acidente': acidente})
+  missoes = acidente.missao_set.exclude(status="removido").all()
+  return render(request, 'acidentes/detalhes.html', {
+    'acidente': acidente,
+    'missoes': missoes,
+  })
 
 def new(request):
   if request.method == "GET":
@@ -46,7 +50,6 @@ def edit(request):
     acidente = Acidente.objects.get(id=acidenteId)
     dataHora = request.POST.get("dataHora", "")
     dataHora = datetime.strptime(dataHora, '%d/%m/%Y %H:%M')
-
     acidente.dataHora = dataHora
     acidente.local = request.POST.get("local", "")
     acidente.descricao = request.POST.get("descricao", "")

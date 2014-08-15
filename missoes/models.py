@@ -4,6 +4,7 @@ from django.db import models
 import datetime
 
 class Missao(models.Model):
+  # caso tenha mais status, mudar allMissionsCompleted
   STATUSES_TYPES = (
     ("aguardandoRecursos", 'Aguardando Alocação de Recursos'),
     ("finalizadoComSucesso", 'Finalizado com Sucesso'),

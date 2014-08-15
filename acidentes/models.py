@@ -23,3 +23,6 @@ class Acidente(models.Model):
 
   def get_absolute_url(self):
     return "/acidentes/detalhes?id=" + str(self.id)
+
+  def missoes_ativas(self):
+    return self.missao_set.exclude(status="removido")

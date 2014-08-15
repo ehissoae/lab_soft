@@ -40,7 +40,7 @@ def new(request):
     if tipoRecurso and nome and telefone:
       num_results = Recurso.objects.filter(nome=nome, tipoRecurso=tipoRecurso).exclude(status="removido").count()
       if num_results == 0:
-        Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
+        recurso = Recurso.objects.create(nome=nome, tipoRecurso=tipoRecurso, telefone=telefone, quantidadeTotal=quantidadeTotal, descricao=descricao)
         return redirect(recurso)
       else:
         messages.error(request, 'Recurso já existe.')

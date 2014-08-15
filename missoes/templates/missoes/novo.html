@@ -11,7 +11,7 @@
     Acidente: {{acidente.local}} <br />
     <input type="hidden" name="acidente_id" value="{{acidente.id}}"><br/>
 
-    Nome: <input type="text" name="nome" /><br/><br/>
+    Nome: <input type="text" name="nome" required /><br/><br/>
     Tipo: 
     <select name="tipoMissao">
       {% for key, value in mission_types %}

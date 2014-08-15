@@ -5,6 +5,7 @@
 {% block header %}Detalhe da missão{% endblock %}
 
 {% block content %}
+  <a href="/acidentes/missoes?acidente_id={{missao.acidente.id}}">Voltar para missões</a>
 
   <table class="table">
     <tr>
@@ -31,7 +32,7 @@
           {% endif %}
       </td>
       <td>{{missao.acidente}}</td>
-      <td><a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}">remover</a>
+      <td><a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}" onclick="return confirm('Tem certeza de que deseja remover a missão?');" >remover</a>
       <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a></td>
     </tr>
   </table>

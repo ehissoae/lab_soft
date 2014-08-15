@@ -12,15 +12,15 @@
 
     <input type="hidden" name="id" value="{{usuario.id}}" />
 
-    Nome: <input type="text" name="firstName" value="{{usuario.first_name}}" /><br/>
-    E-mail: <input type="text" name="email" value="{{usuario.email}}"/><br/>
-    Usuário: <input type="text" name="username" value="{{usuario.username}}" /><br/>
+    Nome: <input type="text" name="firstName" value="{{usuario.first_name}}" required /><br/>
+    E-mail: <input type="text" name="email" value="{{usuario.email}}" required /><br/>
+    Usuário: <input type="text" name="username" value="{{usuario.username}}" required /><br/>
     Tipo Acesso: <select name="tipoAcesso">
         {% for key, value in role_choices %}
           <option value="{{key}}" {%ifequal key usuario.tipoAcesso%}selected{%endifequal%}>{{ value }}</option>
         {% endfor %}
       </select> 
-<br/><br/>  
+    <br/><br/>  
     Mudar senha:<br/>
     Nova Senha: <input type="text" name="newPassword" /><br/>
 

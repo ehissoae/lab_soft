@@ -28,5 +28,5 @@
 
   <a href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
   <a href="/recursos/editar?id={{recurso.id}}">editar</a>
-  <a href="/recursos/remover?id={{recurso.id}}">remover</a>
+  <a href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');" >remover</a>
 {% endblock %}

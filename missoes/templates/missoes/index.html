@@ -27,8 +27,8 @@
         {% endif %}
         <td class="btn-group btn-group-sm"><a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a>
         <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a>
-        <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}" onclick="return confirm('Tem certeza de que deseja remover a missão?');" >alocar recurso</a>
-        <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}">remover</a></td>
+        <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}" >alocar recurso</a>
+        <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}" onclick="return confirm('Tem certeza de que deseja remover a missão?');">remover</a></td>
       </tr>
     {%endfor%}
   </table>

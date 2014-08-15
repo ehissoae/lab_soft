@@ -23,14 +23,16 @@
           <ul class="nav navbar-nav">
             <li><a href="{% url 'acidentes' %}">Acidentes</a></li>
 			      <li><a href="{% url 'recursos' %}">Recursos</a></li>
-            <li><a href="{% url 'usuarios' %}">Usuários</a></li>
-
+            {% if user.profile.tipoAcesso ==  'administrador' %}
+              <li><a href="{% url 'usuarios' %}">Usuários</a></li>
+              <li><a href="">Relatório</a></li>
+            {% endif %}
             
           </ul>
 
           {% if request.user.is_authenticated %}
             <p class="navbar-text navbar-right">
-              <a href="#">Olá, {{ request.user.username }}</a>
+              <a href="#">Olá, {{ user.username }}</a>
               <a title="encerrar sessão" class="glyphicon glyphicon-off" href="/conta/logout"></a>
             </p>
           {% endif %}

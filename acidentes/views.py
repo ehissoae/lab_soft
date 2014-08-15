@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from acidentes.models import Acidente
 from datetime import datetime
-from django.contrib import messages 
+from django.contrib import messages
+from SiGeCAV.utils import *
 
 # Create your views here.
 def index(request):
@@ -12,11 +13,19 @@ def index(request):
   return render(request, 'acidentes/index.html', {'acidentes': acidentes})
 
 def detail(request):
+  url = url_if_not_coordenador(request)
+  if(url):
+    return url
+
   acidenteId = request.GET.get("id", "")
   acidente = Acidente.objects.get(id=acidenteId)
   return render(request, 'acidentes/detalhes.html', {'acidente': acidente})
 
 def new(request):
+  url = url_if_not_coordenador(request)
+  if(url):
+    return url
+
   if request.method == "GET":
     return render(request, 'acidentes/novo.html', {})
   elif request.method == "POST":
@@ -37,6 +46,10 @@ def new(request):
     return render(request, 'acidentes/novo.html', {'dataHora': dataHora, 'local': local, 'descricao': descricao, 'SVCid': SVCid})
 
 def edit(request):
+  url = url_if_not_coordenador(request)
+  if(url):
+    return url
+
   if request.method == "GET":
     acidenteId = request.GET.get("id", "")
     acidente = Acidente.objects.get(id=acidenteId)
@@ -55,6 +68,10 @@ def edit(request):
     return redirect(acidente)
 
 def delete(request):
+  url = url_if_not_coordenador(request)
+  if(url):
+    return url
+
   acidenteId = request.GET.get("id", "")
   acidente = Acidente.objects.get(id=acidenteId)
   acidente.status = "removido"

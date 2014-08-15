@@ -7,9 +7,6 @@ from django.contrib import messages
 
 # Create your views here.
 def index(request):
-  url = url_if_not_authenticated(request)
-  if(url):
-    return url
   recursos = Recurso.objects.exclude(status="removido")
   tipoAcesso = request.user.profile.tipoAcesso
   return render(request, 'recursos/index.html', {
@@ -18,6 +15,10 @@ def index(request):
     })
 
 def detail(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+
   recursoId = request.GET.get("id", "")
   recurso = Recurso.objects.get(id=recursoId)
   return render(request, 'recursos/detalhes.html', {
@@ -25,6 +26,10 @@ def detail(request):
     })
 
 def new(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+
   if request.method == "GET":
     return render(request, 'recursos/novo.html', {
       'resources_types': Recurso.RESOURCES_TYPES,
@@ -50,6 +55,10 @@ def new(request):
       })
 
 def edit(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+
   if request.method == "GET":
     recursoId = request.GET.get("id", "")
     recurso = Recurso.objects.get(id=recursoId)
@@ -72,6 +81,10 @@ def edit(request):
     return redirect(recurso)
 
 def delete(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+  
   recursoId = request.GET.get("id", "")
   recurso = Recurso.objects.get(id=recursoId)
   recurso.status = "removido"

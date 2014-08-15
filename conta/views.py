@@ -15,15 +15,27 @@ def custom_login(request):
 	return redirect(settings.LOGIN_REDIRECT_URL)
 
 def index(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+
   usuarios = User.objects.all()
   return render(request, 'registration/index.html', {'usuarios': usuarios})
 
 def detail(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+
   usuarioId = request.GET.get("id", "")
   usuario = User.objects.get(id=usuarioId)
   return render(request, 'registration/detalhes.html', {'usuario': usuario})
 
 def new(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+
   if request.method == "GET":
     return render(request, 'registration/novo.html', {'role_choices': Profile.ROLE_CHOICES})
   elif request.method == "POST":
@@ -57,6 +69,10 @@ def new(request):
       })
 
 def edit(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+
   if request.method == "GET":
     userId = request.GET.get("id", "")
     user = User.objects.get(id=userId)
@@ -84,6 +100,10 @@ def edit(request):
     return redirect(user.profile)
 
 def delete(request):
+  url = url_if_not_administrador(request)
+  if(url):
+    return url
+  
   usuarioId = request.GET.get("id", "")
   User.objects.get(id=usuarioId).delete()
   return redirect('usuarios')

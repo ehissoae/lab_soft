@@ -7,15 +7,16 @@
 {% block content %}
 
 	<table class="table">
+>
 
     <tr>
       <th>Data</th>
       <th>Local</th>
       <th>Descrição</th>
       <th>Número de missões</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      {% if user.profile.tipoAcesso != 'administrador' %}
+        <th></th>
+      {% endif %}
     </tr>
     {% for acidente in acidentes %}
       <tr>
@@ -27,10 +28,21 @@
         {% else %}
           <td><a href="/acidentes/missoes?acidente_id={{acidente.id}}">{{acidente.missao_set.count}}</a></td>
         {% endif %}
-        <td><a class="btn btn-default" href="/acidentes/detalhes?id={{acidente.id}}">detalhar</a>
-        <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar nova missão</a>
-        <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
-        <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a></td>
+        
+        {% if user.profile.tipoAcesso == 'especialista' %}
+          <td>
+            <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar nova missão</a>
+          </td>
+        {% endif %}
+
+        {% if user.profile.tipoAcesso == 'coordenador' %}
+          <td>
+            <a class="btn btn-default" href="/acidentes/detalhes?id={{acidente.id}}">detalhar</a>
+            <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
+            <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
+          </td>
+        {% endif %}
+
       </tr>
     {%endfor%}
   </table>

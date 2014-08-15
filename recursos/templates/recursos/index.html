@@ -12,7 +12,9 @@
       <th>Tipo</th>
       <th>Telefone</th>
       <th>Quantidade Total</th>
-      <th></th>
+      {% if user.profile.tipoAcesso == 'administrador' %}
+        <th></th>
+      {% endif %}
     </tr>
     {% for recurso in recursos %}
       <tr>
@@ -20,15 +22,17 @@
         <td>{{recurso.get_tipoRecurso_display}}</td>
         <td>{{recurso.telefone}}</td>
         <td>{% firstof recurso.quantidadeTotal "---" %}</td>
-        <td>
-          <a href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
-          <a href="/recursos/editar?id={{recurso.id}}">editar</a>
-          <a href="/recursos/remover?id={{recurso.id}}">remover</a>
-        </td>
+        {% if user.profile.tipoAcesso == 'administrador' %}
+          <td>
+            <a class="btn btn-default" href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
+            <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
+            <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}">remover</a>
+          </td>
+        {% endif %}
       </tr>
     {%endfor%}
   </table>
 
-  <a href="{% url 'recursoNovo' %}">Cadastrar Recurso</a>
+  <a class="btn btn-default" href="{% url 'recursoNovo' %}">Cadastrar Recurso</a>
 
 {% endblock %}

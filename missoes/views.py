@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from missoes.models import Missao, AlocacaoRecurso
 from recursos.models import Recurso
 from acidentes.models import Acidente
+from SiGeCAV.utils import *
 
 # Create your views here.
 def index(request):
@@ -15,12 +16,20 @@ def index(request):
   })
 
 def detail(request):
+  url = url_if_not_especialista(request)
+  if(url):
+    return url
+
   missaoId = request.GET.get("id", "")
   missao = Missao.objects.get(id=missaoId)
   alocacoesRecurso = AlocacaoRecurso.objects.filter(missao_id=missao.id)
   return render(request, 'missoes/detalhes.html', {'missao': missao, 'alocacoesRecurso': alocacoesRecurso})
 
 def new(request):
+  url = url_if_not_especialista(request)
+  if(url):
+    return url
+
   if request.method == "GET":
     acidenteId = request.GET.get("acidente_id", "")
     acidente = Acidente.objects.get(id=acidenteId)
@@ -48,6 +57,10 @@ def new(request):
     return render(request, 'missoes/novo.html', {})
 
 def changeStatus(request):
+  url = url_if_not_especialista(request)
+  if(url):
+    return url
+
   if request.method == "GET":
     missaoId = request.GET.get("id", "")
     missao = Missao.objects.get(id=missaoId)
@@ -63,6 +76,10 @@ def changeStatus(request):
     return redirect(missao)
 
 def delete(request):
+  url = url_if_not_especialista(request)
+  if(url):
+    return url
+
   missaoId = request.GET.get("id", "")
   missao = Missao.objects.get(id=missaoId)
   acidenteId = missao.acidente_id
@@ -72,6 +89,10 @@ def delete(request):
   return redirect('/acidentes/missoes?acidente_id=' + str(acidenteId))
 
 def assignResource(request):
+  url = url_if_not_coordenador(request)
+  if(url):
+    return url
+
   recursos = Recurso.objects.exclude(status="removido")
   if request.method == "GET":
     acidenteId = request.GET.get("acidente_id", "")
@@ -98,11 +119,19 @@ def assignResource(request):
     return render(request, 'missoes/alocarRecurso.html', {'acidente':acidente, 'missao':missao, 'recursos':recursos})
 
 def assignedResourceDetails(request):
+  url = url_if_not_coordenador(request)
+  if(url):
+    return url
+
   recursoAlocadoId = request.GET.get("id", "")
   recursoAlocado = AlocacaoRecurso.objects.get(id=recursoAlocadoId)
   return render(request, 'missoes/detalhesRecursoAlocado.html', {'recursoAlocado': recursoAlocado})
 
 def deleteAssignedResource(request):
+  url = url_if_not_coordenador(request)
+  if(url):
+    return url
+  
   alocacaoRecursoId = request.GET.get("id", "")
   alocacaoRecurso = AlocacaoRecurso.objects.get(id=alocacaoRecursoId)
   missao = alocacaoRecurso.missao

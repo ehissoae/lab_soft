@@ -12,7 +12,9 @@
       <th>Tipo</th>
       <th>Status</th>
       <th>Recursos alocados</th>
-      <th></th>
+      {% if user.profile.tipoAcesso != 'administrador' %}
+        <th></th>
+      {% endif %}
     </tr>
     {% for missao in missoes %}
       <tr>
@@ -24,13 +26,25 @@
         {% else %}
           <td><a href="/acidentes/missoes/detalhes?id={{missao.id}}">{{missao.recursos.count}}</a></td>
         {% endif %}
-        <td class="btn-group btn-group-sm"><a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a>
-        <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a>
-        <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">alocar recurso</a>
-        <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}">remover</a></td>
+
+        {% if user.profile.tipoAcesso == 'especialista' %}
+          <td class="btn-group btn-group-sm">
+            <a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a>
+            <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a>
+            <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}">remover</a>
+          </td>
+        {% endif %}
+
+        {% if user.profile.tipoAcesso == 'coordenador' %}
+          <td class="btn-group btn-group-sm">
+            <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">alocar recurso</a>
+          </td>
+        {% endif %}          
       </tr>
     {%endfor%}
   </table>
 
-  <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missao</a>
+  {% if user.profile.tipoAcesso == 'especialista' %}
+    <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missao</a>
+  {% endif %}
 {% endblock %}

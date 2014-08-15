@@ -79,21 +79,26 @@ WSGI_APPLICATION = 'SiGeCAV.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": "django_db",
-#         "USER": "postgres",
-#         "PASSWORD": "psql",
-#         "HOST": "localhost",
-#         "PORT": "5432",
-#     }
-# }
-import dj_database_url
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_db',
+        'USER': 'djangouser',
+        'PASSWORD': 'mypassword',
+        'HOST': '', 
+        'PORT': '',
+    }
+}
 
-DATABASES = { 'default' : dj_database_url.config()}
+# ---- HEROKU
+# import dj_database_url
+
+# DATABASES = { 'default' : dj_database_url.config()}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
+# ---- HEROKU
 
 LANGUAGE_CODE = 'pt-br'
 
@@ -116,8 +121,3 @@ STATIC_URL = '/static/'
 
 # after login
 LOGIN_REDIRECT_URL = "/"
-
-try:
-  from local_settings import *
-except Exception as e:
-  pass

@@ -1,21 +1,23 @@
-{% load staticfiles %}
-<html>
-<head>
-  <title>SiGeCAV</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-  <h1>Alterar status da missão</h1>
+{% extends "SiGeCAV/base.html" %}
 
-  <form action"acidentes/missoes/editar" method="post">
-    {% csrf_token %}
-    Status: <select name="status">
-      {% for key, value in statuses_types %}
-        <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
-      {% endfor %}
-    </select>
-	<br/>
-    <input type="submit" value="Editar">
-  </form>
-</body>
-<html>
+{% block title %}SiGeCAV - Alterar status da missão{% endblock %}
+
+{% block header %}Alterar status da missão{% endblock %}
+
+{% block content %}
+
+  {% load staticfiles %}
+  <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /></a>
+  
+    <form action"acidentes/missoes/editar" method="post">
+      {% csrf_token %}
+      Status: <select name="status">
+        {% for key, value in statuses_types %}
+          <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
+        {% endfor %}
+      </select>
+  	<br/>
+      <input type="submit" value="Editar">
+    </form>
+
+{% endblock %}

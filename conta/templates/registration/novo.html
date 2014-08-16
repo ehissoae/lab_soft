@@ -5,7 +5,10 @@
 {% block header %}Novo Usuário{% endblock %}
 
 {% block content %}
-  <a href="{% url 'usuarios' %}">voltar</a>
+
+  {% load staticfiles %}
+
+  <a class="btn btn-default" href="{% url 'usuarios' %}"><img src="{% static 'images/back.png' %}" /></a>
 
   <form action"{% url 'recursoNovo' %}" method="post">
     {% csrf_token %}

@@ -5,8 +5,10 @@
 {% block header %}Detalhes de Usuários{% endblock %}
 
 {% block content %}
+
+  {% load staticfiles %}
   
-  <a href="{% url 'usuarios' %}">voltar</a>
+  <a class="btn btn-default" href="{% url 'usuarios' %}"><img src="{% static 'images/back.png' %}" /></a>
 
   <table class="table">
 

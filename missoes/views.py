@@ -62,7 +62,7 @@ def new(request):
     return render(request, 'missoes/novo.html', {})
 
 def changeStatus(request):
-  url = url_if_not_especialista(request)
+  url = url_if_not_coordenador(request)
   if(url):
     return url
 
@@ -86,7 +86,7 @@ def changeStatus(request):
     return redirect(missao)
 
 def delete(request):
-  url = url_if_not_especialista(request)
+  url = url_if_not_administrador(request)
   if(url):
     return url
 
@@ -129,7 +129,7 @@ def assignResource(request):
     return render(request, 'missoes/alocarRecurso.html', {'acidente':acidente, 'missao':missao, 'recursos':recursos})
 
 def assignedResourceDetails(request):
-  url = url_if_not_coordenador(request)
+  url = url_if_not_authenticated(request)
   if(url):
     return url
 
@@ -138,7 +138,7 @@ def assignedResourceDetails(request):
   return render(request, 'missoes/detalhesRecursoAlocado.html', {'recursoAlocado': recursoAlocado})
 
 def deleteAssignedResource(request):
-  url = url_if_not_coordenador(request)
+  url = url_if_not_administrador(request)
   if(url):
     return url
   

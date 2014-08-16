@@ -12,6 +12,7 @@
       <th>Tipo</th>
       <th>Telefone</th>
       <th>Quantidade Total</th>
+      <th>Quantidade Disponível</th>
       <th></th>
     </tr>
     {% for recurso in recursos %}
@@ -20,6 +21,7 @@
         <td>{{recurso.get_tipoRecurso_display}}</td>
         <td>{{recurso.telefone}}</td>
         <td>{% firstof recurso.quantidadeTotal "---" %}</td>
+        <td>{% firstof recurso.quantidadeDisponivel "---" %}</td>
         
         <td>
           <a class="btn btn-default" href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>

@@ -1,23 +1,22 @@
 {% extends "SiGeCAV/base.html" %}
 
-{% block title %}SiGeCAV - Alterar status da missão{% endblock %}
+{% block title %}SiGeCAV - Missões - Alterar Status{% endblock %}
 
-{% block header %}Alterar status da missão{% endblock %}
+{% block header %}Alterar Status da Missão{% endblock %}
 
 {% block content %}
-
   {% load staticfiles %}
   <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /></a>
-  
-    <form action"acidentes/missoes/editar" method="post">
-      {% csrf_token %}
-      Status: <select name="status">
-        {% for key, value in statuses_types %}
-          <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
-        {% endfor %}
-      </select>
-  	<br/>
-      <input type="submit" value="Editar">
-    </form>
+
+  <form action"acidentes/missoes/editar" method="post">
+    {% csrf_token %}
+    Status: <select name="status">
+      {% for key, value in statuses_types %}
+        <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
+      {% endfor %}
+    </select>
+	<br/>
+    <input type="submit" value="Editar">
+  </form>
 
 {% endblock %}

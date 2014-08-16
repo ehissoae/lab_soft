@@ -10,6 +10,7 @@
 
     <tr>
       <th>Nome</th>
+      <th>Nome de usuário</th>
       <th>E-mail</th>
       <th>Tipo Acesso</th>
       <th></th>
@@ -17,6 +18,7 @@
     {% for usuario in usuarios %}
       <tr>
         <td>{{usuario.first_name}} {{usuario.last_name}}</td>
+        <td>{{usuario.username}}</td>
         <td>{{usuario.email}}</td>
         <td>{{usuario.profile.get_tipoAcesso_display}}</td>
         <td>

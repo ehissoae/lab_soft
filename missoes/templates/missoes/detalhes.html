@@ -5,8 +5,21 @@
 {% block header %}Detalhe da missão{% endblock %}
 
 {% block content %}
+
   {% load staticfiles %}
-  <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /></a>
+  <div class="form-group">
+    <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /></a>
+    {% if user.profile.tipoAcesso == 'coordenador' %}
+      <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{missao.acidente.id}}&missao_id={{missao.id}}">alocar recurso</a>
+    {% endif %}
+    {% if user.profile.tipoAcesso == 'administrador' %}
+      <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}" onclick="return confirm('Tem certeza de que deseja remover a missão?');" >remover</a>
+    {% endif %}
+
+    {% if user.profile.tipoAcesso == 'coordenador' %}
+      <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a>
+    {% endif %}
+  </div>
 
   <table class="table">
     <tr>
@@ -14,8 +27,7 @@
       <th>Tipo</th>
       <th>Status</th>
       <th>Recursos Alocados</th>
-      <th>Acidente</th>
-      <th></th>
+      <th>Acidente</th> 
     </tr>
     <tr>
       <td>{{missao.nome}}</td>
@@ -28,7 +40,7 @@
                 <li>
                   <a href="/acidentes/missoes/detalhesRecursoAlocado?id={{alocacaoRecurso.id}}">{{ alocacaoRecurso.recurso}}</a> 
                   {% if user.profile.tipoAcesso == 'administrador' %}
-                    <a href="/acidentes/missoes/removerRecursoAlocado?id={{alocacaoRecurso.id}}"><small>remover</small></a>
+                    <a href="/acidentes/missoes/removerRecursoAlocado?id={{alocacaoRecurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o este recurso da missão?');"><small>remover</small></a>
                   {% endif %}
                 </li>
               {% endfor %}
@@ -38,21 +50,7 @@
           {% endif %}
       </td>
       <td>{{missao.acidente}}</td>
-
-      <td>
-        {% if user.profile.tipoAcesso == 'administrador' %}
-          <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}" onclick="return confirm('Tem certeza de que deseja remover a missão?');" >remover</a>
-        {% endif %}
-
-        {% if user.profile.tipoAcesso == 'coordenador' %}
-          <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">alterar status</a>
-        {% endif %}
-      </td>
     </tr>
   </table>
-
-  {% if user.profile.tipoAcesso == 'coordenador' %}
-    <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{missao.acidente.id}}&missao_id={{missao.id}}">alocar recurso</a>
-  {% endif %}
 
 {% endblock %}

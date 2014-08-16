@@ -21,19 +21,15 @@
     {% endif %}
   </div>
 
-  <table class="table">
-    <tr>
-      <th>Nome</th>
-      <th>Tipo</th>
-      <th>Status</th>
-      <th>Recursos Alocados</th>
-      <th>Acidente</th> 
-    </tr>
-    <tr>
-      <td>{{missao.nome}}</td>
-      <td>{{missao.get_tipoMissao_display}}</td>
-      <td>{{missao.get_status_display}}</td>
-      <td>
+  <dl class="dl-horizontal">
+      <dt>Nome</dt>
+      <dd>{{missao.nome}}</dd>
+      <dt>Tipo</dt>
+      <dd>{{missao.get_tipoMissao_display}}</dd>
+      <dt>Status</dt>
+      <dd>{{missao.get_status_display}}</dd>
+      <dt>Recursos Alocados</dt>
+      <dd>
           {% if missao.recursos.count %}
             <ul class="list-unstyled">
               {% for alocacaoRecurso in alocacoesRecurso %}
@@ -48,9 +44,9 @@
           {% else %}
             Nenhum recurso alocado
           {% endif %}
-      </td>
-      <td>{{missao.acidente}}</td>
-    </tr>
-  </table>
+      </dd>
+      <dt>Acidente</dt> 
+      <dd>{{missao.acidente}}</dd>
+  </dl>
 
 {% endblock %}

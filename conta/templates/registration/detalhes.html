@@ -8,27 +8,21 @@
 
   {% load staticfiles %}
   
-  <a class="btn btn-default" href="{% url 'usuarios' %}"><img src="{% static 'images/back.png' %}" /></a>
+  <div class="form-group">
+    <a class="btn btn-default" href="{% url 'usuarios' %}"><img src="{% static 'images/back.png' %}" /></a>
+    <a class="btn btn-default" href="/conta/detalhes?id={{usuario.id}}">detalhar</a>
+    <a class="btn btn-default" href="/conta/editar?id={{usuario.id}}">editar</a>
+    <a class="btn btn-default" href="/conta/remover?id={{usuario.id}}" onclick="return confirm('Tem certeza de que deseja remover o usuário?');">remover</a>
+  </div>
 
-  <table class="table">
-
-    <tr>
-      <th>Nome</th>
-      <th>Nome de usuário</th>
-      <th>E-mail</th>
-      <th>Tipo Acesso</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td>{{usuario.first_name}} {{usuario.last_name}}</td>
-      <td>{{usuario.username}}</td>
-      <td>{{usuario.email}}</td>
-      <td>{{usuario.profile.get_tipoAcesso_display}}</td>
-      <td>
-        <a class="btn btn-default" href="/conta/detalhes?id={{usuario.id}}">detalhar</a>
-        <a class="btn btn-default" href="/conta/editar?id={{usuario.id}}">editar</a>
-        <a class="btn btn-default" href="/conta/remover?id={{usuario.id}}" onclick="return confirm('Tem certeza de que deseja remover o usuário?');">remover</a>
-      </td>
-    </tr>
-  </table>  
+  <dl class="dl-horizontal">
+    <dt>Nome</dt>
+    <dd>{{usuario.first_name}} {{usuario.last_name}}</dd>
+    <dt>Nome de usuário</dt>
+    <dd>{{usuario.username}}</dd>
+    <dt>E-mail</dt>
+    <dd>{{usuario.email}}</dd>
+    <dt>Tipo Acesso</dt>
+    <dd>{{usuario.profile.get_tipoAcesso_display}}</dd>
+  </dl>  
 {% endblock %}

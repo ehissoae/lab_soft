@@ -7,31 +7,28 @@
 {% block content %}
   {% load staticfiles %}
 
-  <a class="btn btn-default" href="{% url 'recursos' %}"><img src="{% static 'images/back.png' %}" /></a>
+  <div class="form-group">
+    <a class="btn btn-default" href="{% url 'recursos' %}"><img src="{% static 'images/back.png' %}" /></a>
+    {% if user.profile.tipoAcesso == 'administrador' %}
+      <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
+      <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');" >remover</a>
+    {% endif %}
+  </div>
 
-  <table class="table">
-    <tr>
-      <th>Nome</th>
-      <th>Tipo</th>
-      <th>Status</th>
-      <th>Telefone</th>
-      <th>Quantidade Total</th>
-      <th>Quantidade Disponível</th>
-      <th>Descrição</th>
-    </tr>
-    <tr>
-      <td>{{recurso.nome}}</td>
-      <td>{{recurso.get_tipoRecurso_display}}</td>
-      <td>{{recurso.get_status_display}}</td>
-      <td>{{recurso.telefone}}</td>
-      <td>{% firstof recurso.quantidadeTotal "---" %}</td>
-      <td>{% firstof recurso.quantidadeDisponivel "---" %}</td>
-      <td>{{recurso.descricao}}</td>
-    </tr>
-  </table>
-
-  {% if user.profile.tipoAcesso == 'administrador' %}
-    <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
-    <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');" >remover</a>
-  {% endif %}
+  <dl class="dl-horizontal">
+    <dt>Nome</dt>
+    <dd>{{recurso.nome}}</dd>
+    <dt>Tipo</dt>
+    <dd>{{recurso.get_tipoRecurso_display}}</dd>
+    <dt>Status</dt>
+    <dd>{{recurso.get_status_display}}</dd>
+    <dt>Telefone</dt>
+    <dd>{{recurso.telefone}}</dd>
+    <dt>Quantidade Total</dt>
+    <dd>{% firstof recurso.quantidadeTotal "---" %}</dd>
+    <dt>Quantidade Disponível</dt>
+    <dd>{% firstof recurso.quantidadeDisponivel "---" %}</dd>
+    <dt>Descrição</dt>
+    <dd>{{recurso.descricao}}</dd>
+  </dl>
 {% endblock %}

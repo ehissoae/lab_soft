@@ -8,43 +8,40 @@
 
   {% load staticfiles %}
 
-	<a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /></a>
+  <div class="form-group">
+  	<a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /></a>
 
-  {% if user.profile.tipoAcesso == 'coordenador' %}
-    <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
-  {% endif %}
-
-  {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
-    {% if acidente.especialista == None or user.profile.id == acidente.especialista.id %}
-      <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+    {% if user.profile.tipoAcesso == 'coordenador' %}
+      <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>
     {% endif %}
-  {% endif %}
 
-  {% if user.profile.tipoAcesso == 'administrador' %}
-    <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
-  {% endif %}
-  <br/><br/>
+    {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
+      {% if acidente.especialista == None or user.profile.id == acidente.especialista.id %}
+        <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
+      {% endif %}
+    {% endif %}
 
-	<table class="table">
-    <tr>
-      <th>Data</th>
-      <th>Local</th>
-      <th>Descrição</th>
-      <th>Status</th>
-      <th>Coordenador</th>
-      <th>Especialista</th>
-      <th>Link SVC</th>
-    </tr>
-    <tr>
-      <td>{{acidente.dataHora|date:'d/m/Y H:i'}}</td>
-      <td>{{acidente.local}}</td>
-      <td>{{acidente.descricao}}</td>
-      <td>{{acidente.get_status_display}}</td>
-      <td>{{acidente.coordenador}}</td>
-      <td>{{acidente.especialista}}</td>
-      <td>{{acidente.SVCid}}</td>
-    </tr>
-	</table>
+    {% if user.profile.tipoAcesso == 'administrador' %}
+      <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
+    {% endif %}
+  </div>
+
+	<dl class="dl-horizontal">
+      <dt>Data</dt>
+      <dd>{{acidente.dataHora|date:'d/m/Y H:i'}}</dd>
+      <dt>Local</dt>
+      <dd>{{acidente.local}}</dd>
+      <dt>Descrição</dt>
+      <dd>{{acidente.descricao}}</dd>
+      <dt>Status</dt>
+      <dd>{{acidente.get_status_display}}</dd>
+      <dt>Coordenador</dt>
+      <dd>{{acidente.coordenador}}</dd>
+      <dt>Especialista</dt>
+      <dd>{{acidente.especialista}}</dd>
+      <dt>Link SVC</dt>
+      <dd>{{acidente.SVCid}}</dd>
+	</dl>
 
   <h3>Missões para o Acidente <a class="small text-primary" href="/acidentes/missoes?acidente_id={{acidente.id}}">(total: {{acidente.missoes_ativas.count}})</a></h3>
   <ul class="list-unstyled">

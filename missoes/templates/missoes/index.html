@@ -9,7 +9,7 @@
     <a class="btn btn-default" href="/acidentes">Voltar para acidentes</a>
 
     {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
-      {% if acidente.especialista == None or user.profile.id == acidente.especialista.id %}
+      {% if acidente.especialista == None or user.id == acidente.especialista.id %}
           <a class="btn btn-primary" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
       {% endif %}
     {% endif %}
@@ -46,7 +46,7 @@
 
         {% if user.profile.tipoAcesso == 'coordenador' %}
           <td class="btn-group btn-group-sm">
-            <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">alocar recurso</a>
+            <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">Alocar Recurso</a>
           </td>
         {% endif %}          
       </tr>

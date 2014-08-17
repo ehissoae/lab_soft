@@ -9,7 +9,7 @@
   <div class="form-group">
     <a class="btn btn-default" href="/acidentes"><i class="glyphicon glyphicon-arrow-left"></i></a>
     {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
-      {% if acidente.especialista == None or user.profile.id == acidente.especialista.id %}
+      {% if acidente.especialista == None or user.id == acidente.especialista.id %}
         <a class="btn btn-default" href="/acidentes/missoes/novo?acidente_id={{acidente.id}}">Cadastrar missão</a>
       {% endif %}
     {% endif %}

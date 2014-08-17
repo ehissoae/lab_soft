@@ -7,9 +7,15 @@
 {% block content %}
   <div class="form-group">
     <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}">Voltar para missões</a>
-    <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{missao.acidente.id}}&missao_id={{missao.id}}">Alocar Recurso</a>
-    <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">Alterar status</a>
-    <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}" onclick="return confirm('Tem certeza de que deseja remover a missão?');" >Remover</a>
+    {% if user.profile.tipoAcesso == 'coordenador' %}
+      {% if missao.status == 'aguardandoRecursos' %}
+        <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{missao.acidente.id}}&missao_id={{missao.id}}">Alocar Recurso</a>
+      {% endif %}
+      <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">Alterar status</a>
+    {% endif %}
+    {% if user.profile.tipoAcesso == "administrador" %}
+      <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}" onclick="return confirm('Tem certeza de que deseja remover a missão?');" >Remover</a>
+    {% endif %}
   </div>
 
   <table class="table">

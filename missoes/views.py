@@ -17,10 +17,6 @@ def index(request):
   })
 
 def detail(request):
-  url = url_if_not_especialista(request)
-  if(url):
-    return url
-
   missaoId = request.GET.get("id", "")
   missao = Missao.objects.get(id=missaoId)
   alocacoesRecurso = AlocacaoRecurso.objects.filter(missao_id=missao.id)

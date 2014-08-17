@@ -44,7 +44,7 @@
           </td>
         {% endif %}
 
-        {% if user.profile.tipoAcesso == 'coordenador' %}
+        {% if user.profile.tipoAcesso == 'coordenador' and acidente.coordenador.id == user.id and missao.status == 'aguardandoRecursos' %}
           <td class="btn-group btn-group-sm">
             <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">Alocar Recurso</a>
           </td>

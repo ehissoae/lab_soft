@@ -78,21 +78,21 @@ WSGI_APPLICATION = 'SiGeCAV.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'django_db',
-#         'USER': 'djangouser',
-#         'PASSWORD': 'mypassword',
-#         'HOST': '', 
-#         'PORT': '',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_db',
+        'USER': 'djangouser',
+        'PASSWORD': 'mypassword',
+        'HOST': '', 
+        'PORT': '',
+    }
+}
 
 # ---- HEROKU
-import dj_database_url
+# import dj_database_url
 
-DATABASES = { 'default' : dj_database_url.config()}
+# DATABASES = { 'default' : dj_database_url.config()}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

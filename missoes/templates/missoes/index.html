@@ -9,7 +9,7 @@
   <div class="form-group">
     {% load staticfiles %}
 
-    <a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /></a>
+    <a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /> voltar </a>
 
     {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
       {% if acidente.especialista == None or user.id == acidente.especialista.id %}

@@ -8,7 +8,7 @@
   {% load staticfiles %}
 
   <div class="form-group">
-    <a class="btn btn-default" href="{% url 'recursos' %}"><img src="{% static 'images/back.png' %}" /></a>
+    <a class="btn btn-default" href="{% url 'recursos' %}"><img src="{% static 'images/back.png' %}" /> voltar </a>
     {% if user.profile.tipoAcesso == 'administrador' %}
       <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
       <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');" >remover</a>

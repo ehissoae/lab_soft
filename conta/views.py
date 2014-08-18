@@ -57,6 +57,7 @@ def new(request):
     else:
       if first_name and email and username and password and tipoAcesso:
         user = User.objects.create(first_name=first_name, email=email, username=username, password=password)
+        user.set_password(password)
         profile = Profile.objects.create(tipoAcesso=tipoAcesso, user=user)
         return redirect(profile)
     return render(request, 'registration/novo.html', {

@@ -74,7 +74,7 @@ def edit(request):
     return redirect(acidente)
 
 def delete(request):
-  url = url_if_not_coordenador(request)
+  url = url_if_not_administrador(request)
   if(url):
     return url
 

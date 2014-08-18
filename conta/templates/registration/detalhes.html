@@ -9,7 +9,7 @@
   {% load staticfiles %}
   
   <div class="form-group">
-    <a class="btn btn-default" href="{% url 'usuarios' %}"><img src="{% static 'images/back.png' %}" /></a>
+    <a class="btn btn-default" href="{% url 'usuarios' %}"><img src="{% static 'images/back.png' %}" /> voltar </a>
     <a class="btn btn-default" href="/conta/editar?id={{usuario.id}}">editar</a>
     <a class="btn btn-default" href="/conta/remover?id={{usuario.id}}" onclick="return confirm('Tem certeza de que deseja remover o usuário?');">remover</a>
   </div>

@@ -9,7 +9,7 @@
   {% load staticfiles %}
 
   <div class="form-group">
-  	<a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /> voltar  voltar </a>
+  	<a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /> voltar </a>
 
     {% if user.profile.tipoAcesso == 'coordenador' %}
       <a class="btn btn-default" href="/acidentes/editar?id={{acidente.id}}">editar</a>

@@ -4,6 +4,7 @@ from recursos.models import Recurso
 from acidentes.models import Acidente
 from SiGeCAV.utils import *
 from django.db.models import Q
+from django.http import Http404
 
 # Create your views here.
 def index(request):
@@ -48,6 +49,9 @@ def new(request):
     acidenteId = request.POST.get("acidente_id", "")
     if nome and tipoMissao and acidenteId:
       acidente = Acidente.objects.get(id=acidenteId)
+      if not acidente.aceita_novas_missoes:
+        raise Http404
+
       missao = Missao.objects.create(nome=nome, tipoMissao=tipoMissao, acidente_id=acidenteId)
 
       if acidente.especialista == None:

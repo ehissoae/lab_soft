@@ -20,3 +20,7 @@ import pdb; pdb.set_trace()
 
 
 
+# pro heroku
+hash do password 'admin' = pbkdf2_sha256$12000$YYg3Dd56f4AE$L/HBurnCHFVRPy94p4VJe4LHEScZrRpnxBp2lSM814Y=
+
+echo "select * from auth_user;" | heroku pg:psql --app sigecav

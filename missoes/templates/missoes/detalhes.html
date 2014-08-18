@@ -5,8 +5,10 @@
 {% block header %}Detalhe da missão{% endblock %}
 
 {% block content %}
+
+  {% load staticfiles %}
   <div class="form-group">
-    <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}">Voltar para missões</a>
+    <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /></a>
     {% if user.profile.tipoAcesso == 'coordenador' %}
       {% if missao.status == 'aguardandoRecursos' and missao.acidente.coordenador.id == user.id %}
         <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{missao.acidente.id}}&missao_id={{missao.id}}">Alocar Recurso</a>
@@ -18,31 +20,32 @@
     {% endif %}
   </div>
 
-  <table class="table">
-    <tr>
-      <th>Nome</th>
-      <th>Tipo</th>
-      <th>Status</th>
-      <th>Recursos Alocados</th>
-      <th>Acidente</th> 
-    </tr>
-    <tr>
-      <td>{{missao.nome}}</td>
-      <td>{{missao.get_tipoMissao_display}}</td>
-      <td>{{missao.get_status_display}}</td>
-      <td>
+  <dl class="dl-horizontal">
+      <dt>Nome</dt>
+      <dd>{{missao.nome}}</dd>
+      <dt>Tipo</dt>
+      <dd>{{missao.get_tipoMissao_display}}</dd>
+      <dt>Status</dt>
+      <dd>{{missao.get_status_display}}</dd>
+      <dt>Recursos Alocados</dt>
+      <dd>
           {% if missao.recursos.count %}
             <ul class="list-unstyled">
               {% for alocacaoRecurso in alocacoesRecurso %}
-                <li><a href="/acidentes/missoes/detalhesRecursoAlocado?id={{alocacaoRecurso.id}}">{{ alocacaoRecurso.recurso}}</a> <a href="/acidentes/missoes/removerRecursoAlocado?id={{alocacaoRecurso.id}}"><small>remover</small></a></li>
+                <li>
+                  <a href="/acidentes/missoes/detalhesRecursoAlocado?id={{alocacaoRecurso.id}}">{{ alocacaoRecurso.recurso}}</a> 
+                  {% if user.profile.tipoAcesso == 'administrador' %}
+                    <a href="/acidentes/missoes/removerRecursoAlocado?id={{alocacaoRecurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o este recurso da missão?');"><small>remover</small></a>
+                  {% endif %}
+                </li>
               {% endfor %}
             </ul>
           {% else %}
             Nenhum recurso alocado
           {% endif %}
-      </td>
-      <td>{{missao.acidente}}</td>
-    </tr>
-  </table>
+      </dd>
+      <dt>Acidente</dt> 
+      <dd>{{missao.acidente}}</dd>
+  </dl>
 
 {% endblock %}

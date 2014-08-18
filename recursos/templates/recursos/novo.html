@@ -6,7 +6,9 @@
 
 {% block content %}
 
-  <a href="{% url 'recursos' %}">voltar</a>
+  {% load staticfiles %}
+
+  <a class="btn btn-default" href="{% url 'recursos' %}"><img src="{% static 'images/back.png' %}" /></a>
 
   <form action"{% url 'recursoNovo' %}" method="post">
     {% csrf_token %}

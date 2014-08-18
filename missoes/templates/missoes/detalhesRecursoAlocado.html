@@ -5,6 +5,8 @@
 {% block header %}Detalhes da Alocação de Recurso{% endblock %}
 
 {% block content %}
+  {% load staticfiles %}
+  <a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{recursoAlocado.missao.id}}"><img src="{% static 'images/back.png' %}" /></a>
 
   <dl class="dl-horizontal">
     <dt>Acidente</dt>

@@ -13,9 +13,7 @@
       <th>Telefone</th>
       <th>Quantidade Total</th>
       <th>Quantidade Disponível</th>
-      {% if user.profile.tipoAcesso == 'administrador' %}
-        <th></th>
-      {% endif %}
+      <th></th>
     </tr>
     {% for recurso in recursos %}
       <tr>
@@ -25,17 +23,20 @@
         <td>{% firstof recurso.quantidadeTotal "---" %}</td>
         <td>{% firstof recurso.quantidadeDisponivel "---" %}</td>
         
+        <td>
+          <a class="btn btn-default" href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
+          
         {% if user.profile.tipoAcesso == 'administrador' %}
-          <td>
-            <a class="btn btn-default" href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
-            <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
-            <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}} onclick="return confirm('Tem certeza de que deseja remover o recurso?');"">remover</a>
-          </td>
+          <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
+          <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');")>remover</a>
         {% endif %}
+        </td>
       </tr>
     {%endfor%}
   </table>
 
-  <a class="btn btn-default" href="{% url 'recursoNovo' %}">Cadastrar Recurso</a>
+  {% if user.profile.tipoAcesso == 'administrador' %}
+    <a class="btn btn-default" href="{% url 'recursoNovo' %}">Cadastrar Recurso</a>
+  {% endif %}
 
 {% endblock %}

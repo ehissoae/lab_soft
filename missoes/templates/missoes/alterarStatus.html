@@ -5,6 +5,8 @@
 {% block header %}Alterar Status da Missão{% endblock %}
 
 {% block content %}
+  {% load staticfiles %}
+  <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /></a>
 
   <form action"acidentes/missoes/editar" method="post">
     {% csrf_token %}

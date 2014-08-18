@@ -7,6 +7,10 @@ from django.db.models import Q
 
 # Create your views here.
 def index(request):
+  url = url_if_not_authenticated(request)
+  if(url):
+    return url
+
   acidenteId = request.GET.get("acidente_id", "")
   acidente = Acidente.objects.get(id=acidenteId)
   missoes = acidente.missao_set.exclude(status="removido")
@@ -17,6 +21,10 @@ def index(request):
   })
 
 def detail(request):
+  url = url_if_not_authenticated(request)
+  if(url):
+    return url
+
   missaoId = request.GET.get("id", "")
   missao = Missao.objects.get(id=missaoId)
   alocacoesRecurso = AlocacaoRecurso.objects.filter(missao_id=missao.id)
@@ -54,7 +62,7 @@ def new(request):
     return render(request, 'missoes/novo.html', {})
 
 def changeStatus(request):
-  url = url_if_not_especialista(request)
+  url = url_if_not_coordenador(request)
   if(url):
     return url
 
@@ -78,7 +86,7 @@ def changeStatus(request):
     return redirect(missao)
 
 def delete(request):
-  url = url_if_not_especialista(request)
+  url = url_if_not_administrador(request)
   if(url):
     return url
 
@@ -121,7 +129,7 @@ def assignResource(request):
     return render(request, 'missoes/alocarRecurso.html', {'acidente':acidente, 'missao':missao, 'recursos':recursos})
 
 def assignedResourceDetails(request):
-  url = url_if_not_coordenador(request)
+  url = url_if_not_authenticated(request)
   if(url):
     return url
 
@@ -130,7 +138,7 @@ def assignedResourceDetails(request):
   return render(request, 'missoes/detalhesRecursoAlocado.html', {'recursoAlocado': recursoAlocado})
 
 def deleteAssignedResource(request):
-  url = url_if_not_coordenador(request)
+  url = url_if_not_administrador(request)
   if(url):
     return url
   

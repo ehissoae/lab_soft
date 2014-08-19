@@ -1,0 +1,20 @@
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Gerar Relatório{% endblock %}
+
+{% block header %}Gerar Relatório{% endblock %}
+
+{% block content %}
+
+  <form action="{% url 'gerarRelatorio' %}" method="post">
+    {% csrf_token %}
+
+    Data Inicial: <input type="text" name="dataInicial" value="{% if dataInicial %}{{ dataInicial }}{% else %}{% now 'd/m/Y' %}{% endif %}" required /><br/><br/>
+
+    Data Final: <input type="text" name="dataFinal" value="{% if dataFinal %}{{ dataInicial }}{% else %}{% now 'd/m/Y' %}{% endif %}" required /><br/><br/>
+
+    <input type="submit" value="Gerar">
+
+  </form>
+
+{% endblock %}

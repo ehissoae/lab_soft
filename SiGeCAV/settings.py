@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'recursos',
     'conta',
     'missoes',
+    'relatorio',
     'home',
     'SiGeCAV',
 )

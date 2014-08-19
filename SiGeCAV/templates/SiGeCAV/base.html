@@ -25,7 +25,7 @@
 			      <li><a href="{% url 'recursos' %}">Recursos</a></li>
             {% if user.profile.tipoAcesso ==  'administrador' %}
               <li><a href="{% url 'usuarios' %}">Usuários</a></li>
-              <li><a href="">Relatório</a></li>
+              <li><a href="{% url 'relatorio' %}">Relatório</a></li>
             {% endif %}
             
           </ul>

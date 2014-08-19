@@ -1,12 +1,31 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from recursos.models import Recurso
+from acidentes.models import Acidente
 from SiGeCAV.utils import *
-from django.contrib import messages 
+from datetime import datetime
 
 def relatorio(request):
-  return render(request, 'relatorio.html', {})
+  return render(request, 'relatorio/relatorio.html', {})
 
 def gerarRelatorio(request):
-  return render(request, 'gerarRelatorio.html', {})
+  dataInicial = request.POST.get("dataInicial", "")
+  dataFinal = request.POST.get("dataFinal", "")
+
+  if dataInicial and dataFinal:
+    dataInicialFormatada = datetime.strptime(dataInicial, '%d/%m/%Y')
+    dataFinalFormatada = datetime.strptime(dataFinal, '%d/%m/%Y')
+
+    acidentes = Acidente.objects.filter(dataHora__gte=dataInicialFormatada, dataHora__lte=dataFinalFormatada)
+
+    return render(request, 'relatorio/gerarRelatorio.html', {
+      'dataInicial': dataInicial, 
+      'dataFinal': dataFinal,
+      'acidentesAnalise': acidentes.filter(status='aguardandoAnalise'),
+      'acidentesAndamento': acidentes.filter(status='emAndamento'),
+      'acidentesFinalizados': acidentes.filter(status='finalizado'),
+      'acidentesRemovidos': acidentes.filter(status='removido')
+    })
+
+  else:
+    return render(request, 'relatorio/relatorio.html', {'dataInicial': dataInicial, 'dataFinal': dataFinal})

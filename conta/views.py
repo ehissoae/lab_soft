@@ -10,8 +10,8 @@ from django.contrib import messages
 def custom_login(request):
   url = url_if_not_authenticated(request)
   if(url):
+    messages.error(request, 'Usuário ou senha inválidos')
     return url
-    
   return redirect(settings.LOGIN_REDIRECT_URL)
 
 def index(request):

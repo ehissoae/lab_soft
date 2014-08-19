@@ -23,7 +23,7 @@ class Recurso(models.Model):
     if alocados.count() > 0:
       for alocado in alocados:
         qtd = alocado.quantidadeAlocada
-        if qtd > 0:
+        if qtd > 0 and alocado.missao.status not in ['removido', 'finalizadoComSucesso', 'finalizadoSemSucesso']:
           quantidadeAlocada += qtd
     return self.quantidadeTotal - quantidadeAlocada
 

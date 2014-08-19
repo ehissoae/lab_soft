@@ -12,7 +12,9 @@
     {% csrf_token %}
     Status: <select name="status">
       {% for key, value in statuses_types %}
-        <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
+        {% if key != 'removido' %}       
+          <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
+        {% endif %}
       {% endfor %}
     </select>
 	<br/>

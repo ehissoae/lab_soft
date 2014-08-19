@@ -61,3 +61,7 @@ ul.errorlist {
 	padding-left: 0px;
 	font-size: 12px;
 }
+
+div.btn {
+	padding: 0px;
+}

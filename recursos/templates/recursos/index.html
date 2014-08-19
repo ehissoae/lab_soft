@@ -6,34 +6,47 @@
 
 {% block content %}
 
-  <table class="table">
-    <tr>
-      <th>Nome</th>
-      <th>Tipo</th>
-      <th>Telefone</th>
-      <th>Quantidade Total</th>
-      <th>Quantidade Disponível</th>
-      <th></th>
-    </tr>
-    {% for recurso in recursos %}
+  {% if recursos %}
+    <table class="table">
       <tr>
-        <td>{{recurso.nome}}</td>
-        <td>{{recurso.get_tipoRecurso_display}}</td>
-        <td>{{recurso.telefone}}</td>
-        <td>{% firstof recurso.quantidadeTotal "---" %}</td>
-        <td>{% firstof recurso.quantidadeDisponivel "---" %}</td>
-        
-        <td>
-          <a class="btn btn-default" href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
-          
-        {% if user.profile.tipoAcesso == 'administrador' %}
-          <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
-          <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');")>remover</a>
-        {% endif %}
-        </td>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Telefone</th>
+        <th>Quantidade Total</th>
+        <th>Quantidade Disponível</th>
+        <th></th>
       </tr>
-    {%endfor%}
-  </table>
+      {% for recurso in recursos %}
+        <tr>
+          <td>{{recurso.nome}}</td>
+          <td>{{recurso.get_tipoRecurso_display}}</td>
+          <td>{{recurso.telefone}}</td>
+          <td>{% firstof recurso.quantidadeTotal "---" %}</td>
+          <td>{% firstof recurso.quantidadeDisponivel "---" %}</td>
+          
+          <td>
+            <a class="btn btn-default" href="/recursos/detalhes?id={{recurso.id}}">detalhar</a>
+            
+          {% if user.profile.tipoAcesso == 'administrador' %}
+            {% if recurso.naoEstaAlocado %}
+              <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">Editar</a>
+              <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');")>Remover</a>
+            {% else %}
+              <div class="js-tooltip btn" data-placement="right" data-toggle="tooltip" title="A alteração do recurso foi desabilitada, pois o recurso está alocado em missões.">
+                <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}" disabled >Editar</a>
+              </div>
+              <div class="js-tooltip btn" data-placement="right" data-toggle="tooltip" title="A remoção do recurso foi desabilitada, pois o recurso está alocado em missões.">
+                <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');") disabled >Remover</a>
+              </div>
+            {% endif %}
+          {% endif %}
+          </td>
+        </tr>
+      {%endfor%}
+    </table>
+  {% else %}
+    <p class="text-muted">Não há recursos cadastrados.</p>
+  {% endif %}
 
   {% if user.profile.tipoAcesso == 'administrador' %}
     <a class="btn btn-default" href="{% url 'recursoNovo' %}">Cadastrar Recurso</a>

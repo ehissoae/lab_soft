@@ -2,7 +2,8 @@ from django.db import models
 from django.template import Context
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
-from missoes.models import AlocacaoRecurso
+from missoes.models import AlocacaoRecurso, Missao
+from django.db.models import Q
 
 class Recurso(models.Model):
   RESOURCES_TYPES = (("externo", "Externo"), ("internoFisico", "Interno Fisico"), ("internoHumano", "Interno Humano"))
@@ -32,3 +33,8 @@ class Recurso(models.Model):
 
   def get_absolute_url(self):
     return "/recursos/detalhes?id=" + str(self.id)
+
+  def naoEstaAlocado(self):
+    idsMissoesNaoFinalizadas = Missao.objects.filter(Q(status="aguardandoRecursos") | Q(status="emAndamento")).values_list("id",flat=True)
+    quantidadeAlocada = AlocacaoRecurso.objects.filter(recurso_id=self.id,missao_id__in=idsMissoesNaoFinalizadas).count()
+    return quantidadeAlocada == 0

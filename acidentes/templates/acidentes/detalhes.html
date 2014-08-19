@@ -43,12 +43,16 @@
       <dd>{{acidente.SVCid}}</dd>
 	</dl>
 
-  <h3>Missões para o Acidente <a class="small text-primary" href="/acidentes/missoes?acidente_id={{acidente.id}}">(total: {{acidente.missoes_ativas.count}})</a></h3>
-  <ul class="list-unstyled">
-    {% for missao in acidente.missoes_ativas %}
-      <li><a href="/acidentes/missoes/detalhes?id={{missao.id}}">{{missao.nome}} - {{missao.tipoMissao}} - {{missao.get_status_display}}</a></li>
-    {% endfor %}
-  </ul>
+  {% if acidente.missoes_ativas %}
+    <h3>Missões para o Acidente <a class="small text-primary" href="/acidentes/missoes?acidente_id={{acidente.id}}">(total: {{acidente.missoes_ativas.count}})</a></h3>
+    <ul class="list-unstyled">
+      {% for missao in acidente.missoes_ativas %}
+        <li><a href="/acidentes/missoes/detalhes?id={{missao.id}}">{{missao.nome}} - {{missao.tipoMissao}} - {{missao.get_status_display}}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-muted">Não há missões nesse acidente.</p>
+  {% endif %}
 
 	<h3>Câmera SVC<h3>
 	<iframe src="{{acidente.SVCid}}"  scrolling='no' frameborder='0' style="overflow: scroll;width: 640px; height:390px;overflow:hidden">Aguarde...</iframe>

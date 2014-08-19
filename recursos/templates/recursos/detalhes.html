@@ -10,8 +10,18 @@
   <div class="form-group">
     <a class="btn btn-default" href="{% url 'recursos' %}"><img src="{% static 'images/back.png' %}" /></a>
     {% if user.profile.tipoAcesso == 'administrador' %}
-      <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">editar</a>
-      <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');" >remover</a>
+
+      {% if recurso.naoEstaAlocado %}
+        <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}">Editar</a>
+        <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');" >Remover</a>
+      {% else %}
+        <div class="js-tooltip btn" data-placement="right" data-toggle="tooltip" title="A alteração do recurso foi desabilitada, pois o recurso está alocado em missões.">
+          <a class="btn btn-default" href="/recursos/editar?id={{recurso.id}}" disabled>Editar</a>
+        </div>
+        <div class="js-tooltip btn" data-placement="right" data-toggle="tooltip" title="A remoção do recurso foi desabilitada, pois o recurso está alocado em missões.">
+          <a class="btn btn-default" href="/recursos/remover?id={{recurso.id}}" onclick="return confirm('Tem certeza de que deseja remover o recurso?');" disabled >Remover</a>
+        </div>
+      {% endif %}
     {% endif %}
   </div>
 

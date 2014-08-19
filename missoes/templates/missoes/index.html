@@ -42,7 +42,7 @@
           <td class="btn-group btn-group-sm">
             <a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a>
             
-          {% if user.profile.tipoAcesso == 'coordenador' and acidente.coordenador.id == user.id and missao.status in ['aguardandoRecursos', 'emAndamento'] %}
+          {% if user.profile.tipoAcesso == 'coordenador' and acidente.coordenador.id == user.id and (missao.status == 'aguardandoRecursos'or missao.status == 'emAndamento') %}
             <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">Alocar Recurso</a>
             <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">Alterar Status</a>
           {% endif %}          

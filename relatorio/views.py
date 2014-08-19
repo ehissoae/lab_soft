@@ -6,7 +6,7 @@ from SiGeCAV.utils import *
 from django.contrib import messages 
 
 def relatorio(request):
-  return render(request, 'recursos/index.html', {})
+  return render(request, 'relatorio.html', {})
 
 def gerarRelatorio(request):
-  return render(request, 'recursos/index.html', {})
+  return render(request, 'gerarRelatorio.html', {})

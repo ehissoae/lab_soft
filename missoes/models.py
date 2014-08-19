@@ -31,6 +31,9 @@ class Missao(models.Model):
   def get_absolute_url(self):
     return "/acidentes/missoes/detalhes?id=" + str(self.id)
 
+  def can_change_status(self):
+    return self.status not in ['emAndamento', 'aguardandoRecursos']
+
 class AlocacaoRecurso(models.Model):
   recurso = models.ForeignKey("recursos.Recurso")
   missao = models.ForeignKey("missoes.Missao")

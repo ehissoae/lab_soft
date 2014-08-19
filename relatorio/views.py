@@ -12,9 +12,11 @@ def gerarRelatorio(request):
   dataInicial = request.POST.get("dataInicial", "")
   dataFinal = request.POST.get("dataFinal", "")
 
+  dataFinalCoxa = dataFinal + ' 23:59'
+
   if dataInicial and dataFinal:
     dataInicialFormatada = datetime.strptime(dataInicial, '%d/%m/%Y')
-    dataFinalFormatada = datetime.strptime(dataFinal, '%d/%m/%Y')
+    dataFinalFormatada = datetime.strptime(dataFinalCoxa, '%d/%m/%Y %H:%M')
 
     acidentes = Acidente.objects.filter(dataHora__gte=dataInicialFormatada, dataHora__lte=dataFinalFormatada)
 

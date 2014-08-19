@@ -32,7 +32,7 @@
 
           {% if request.user.is_authenticated %}
             <p class="navbar-text navbar-right">
-              <a href="#">Olá, {{ user.first_name }}</a>
+              <span style="color: white">Olá, {{ user.first_name }}</span>
               <a title="encerrar sessão" class="glyphicon glyphicon-off" href="/conta/logout"></a>
             </p>
           {% endif %}

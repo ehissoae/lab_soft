@@ -28,4 +28,4 @@ class Acidente(models.Model):
     return self.missao_set.exclude(status="removido")
 
   def aceita_novas_missoes(self):
-    return self.status not in ["finalizado", "removido"]
+    return self.status in ["finalizado", "removido"]

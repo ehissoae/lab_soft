@@ -32,7 +32,7 @@ class Missao(models.Model):
     return "/acidentes/missoes/detalhes?id=" + str(self.id)
 
   def can_change_status(self):
-    return self.status not in ['emAndamento', 'aguardandoRecursos']
+    return self.status in ['emAndamento', 'aguardandoRecursos']
 
 class AlocacaoRecurso(models.Model):
   recurso = models.ForeignKey("recursos.Recurso")

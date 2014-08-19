@@ -29,3 +29,6 @@ class Acidente(models.Model):
 
   def aceita_novas_missoes(self):
     return self.status not in ["finalizado", "removido"]
+
+  def esta_finalizado(self):
+    return self.status == "finalizado"

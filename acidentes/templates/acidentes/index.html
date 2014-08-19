@@ -48,7 +48,13 @@
             {% endif %}
 
             {% if user.profile.tipoAcesso == 'administrador' %}
-              <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
+              {% if not acidente.esta_finalizado %}
+                <div class="js-tooltip btn" data-placement="right" data-toggle="tooltip" title="Acidente não pode ser removido pois não está finalizado">
+                  <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');" disabled >remover</a>
+                </div>
+              {% else %}
+                <a class="btn btn-default" href="/acidentes/remover?id={{acidente.id}}" onclick="return confirm('Tem certeza de que deseja remover o acidente?');">remover</a>
+              {% endif %}
             {% endif %}
 
           </td>

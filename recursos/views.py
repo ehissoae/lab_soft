@@ -7,6 +7,10 @@ from django.contrib import messages
 
 # Create your views here.
 def index(request):
+  url = url_if_not_authenticated(request)
+  if(url):
+    return url
+  
   recursos = Recurso.objects.exclude(status="removido")
   tipoAcesso = request.user.profile.tipoAcesso
   return render(request, 'recursos/index.html', {

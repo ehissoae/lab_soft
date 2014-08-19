@@ -8,12 +8,12 @@
 
   {% load staticfiles %}
   <div class="form-group">
-    <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /></a>
+    <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /> voltar </a>
     {% if user.profile.tipoAcesso == 'coordenador' %}
-      {% if missao.status == 'aguardandoRecursos' and missao.acidente.coordenador.id == user.id %}
+      {% if missao.can_change_status and missao.acidente.coordenador.id == user.id %}
         <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{missao.acidente.id}}&missao_id={{missao.id}}">Alocar Recurso</a>
+        <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">Alterar status</a>
       {% endif %}
-      <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">Alterar status</a>
     {% endif %}
     {% if user.profile.tipoAcesso == "administrador" %}
       <a class="btn btn-default" href="/acidentes/missoes/remover?id={{missao.id}}" onclick="return confirm('Tem certeza de que deseja remover a missão?');" >Remover</a>

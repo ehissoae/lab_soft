@@ -8,7 +8,7 @@
 
   {% load staticfiles %}
 
-  <a class="btn btn-default" href="{% url 'usuarios' %}"><img src="{% static 'images/back.png' %}" /></a>
+  <a class="btn btn-default" href="{% url 'usuarios' %}"><img src="{% static 'images/back.png' %}" /> voltar </a>
 
   <form action"{% url 'recursoNovo' %}" method="post">
     {% csrf_token %}
@@ -25,7 +25,7 @@
       </select> 
     <br/><br/>  
     Mudar senha:<br/>
-    Nova Senha: <input type="text" name="newPassword" /><br/>
+    Nova Senha: <input type="password" name="newPassword" /><br/>
 
     <input type="submit" value="Editar">
   </form>

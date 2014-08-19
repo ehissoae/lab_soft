@@ -8,7 +8,7 @@
   {% load staticfiles %}
 
   <div class="form-group">
-    <a class="btn btn-default" href="{% url 'recursos' %}"><img src="{% static 'images/back.png' %}" /></a>
+    <a class="btn btn-default" href="{% url 'recursos' %}"><img src="{% static 'images/back.png' %}" /> voltar </a>
     {% if user.profile.tipoAcesso == 'administrador' %}
 
       {% if recurso.naoEstaAlocado %}

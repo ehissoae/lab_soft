@@ -1,0 +1,21 @@
+{% extends "SiGeCAV/base.html" %}
+
+{% block title %}SiGeCAV - Relatório{% endblock %}
+
+{% block header %}Relatório{% endblock %}
+
+{% block content %}
+
+  
+
+  Relatório de {{dataInicial}} até {{dataFinal}} <br />
+
+  Acidentes aguardando análise: {{acidentesAnalise.count}} <br />
+
+  Acidentes em andamento: {{acidentesAndamento.count}} <br />
+
+  Acidentes finalizados: {{acidentesFinalizados.count}} <br />
+
+  Acidentes removidos: {{acidentesRemovidos.count}} <br />
+
+{% endblock %}

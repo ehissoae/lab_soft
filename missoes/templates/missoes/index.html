@@ -9,7 +9,7 @@
   <div class="form-group">
     {% load staticfiles %}
 
-    <a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /></a>
+    <a class="btn btn-default" href="{% url 'acidentes' %}"><img src="{% static 'images/back.png' %}" /> voltar </a>
 
     {% if user.profile.tipoAcesso == 'especialista' and acidente.aceita_novas_missoes %}
       {% if acidente.especialista == None or user.id == acidente.especialista.id %}
@@ -42,7 +42,7 @@
           <td class="btn-group btn-group-sm">
             <a class="btn btn-default" href="/acidentes/missoes/detalhes?id={{missao.id}}">detalhar</a>
             
-          {% if user.profile.tipoAcesso == 'coordenador' and acidente.coordenador.id == user.id and missao.status == 'aguardandoRecursos' %}
+          {% if user.profile.tipoAcesso == 'coordenador' and acidente.coordenador.id == user.id and missao.can_change_status %}
             <a class="btn btn-default" href="/acidentes/missoes/alocarRecurso?acidente_id={{acidente.id}}&missao_id={{missao.id}}">Alocar Recurso</a>
             <a class="btn btn-default" href="/acidentes/missoes/alterarStatus?id={{missao.id}}">Alterar Status</a>
           {% endif %}          

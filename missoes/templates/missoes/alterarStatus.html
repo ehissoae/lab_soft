@@ -6,13 +6,15 @@
 
 {% block content %}
   {% load staticfiles %}
-  <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /></a>
+  <a class="btn btn-default" href="/acidentes/missoes?acidente_id={{missao.acidente.id}}"><img src="{% static 'images/back.png' %}" /> voltar </a>
 
   <form action"acidentes/missoes/editar" method="post">
     {% csrf_token %}
     Status: <select name="status">
       {% for key, value in statuses_types %}
-        <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
+        {% if key != 'removido' %}       
+          <option value="{{key}}" {%ifequal key missao.status%}selected{%endifequal%}>{{ value }}</option>
+        {% endif %}
       {% endfor %}
     </select>
 	<br/>
